@@ -1,0 +1,19 @@
+{
+  "name": "yumkaax",
+  "version": "1.0.0",
+  "description": "Sistema de hidropinia",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EdwinDeveloper/Yum-kax.git"
+  },
+  "author": "Edwin Kevin Misael",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EdwinDeveloper/Yum-kax/issues"
+  },
+  "homepage": "https://github.com/EdwinDeveloper/Yum-kax#readme"
+}
