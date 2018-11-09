@@ -10,6 +10,13 @@ app.get('/users',(req,res)=>{
         message:"Hi users"
     });
 });
+app.post('/users',(req,res)=>{
+    console.log("New User in the way");
+    res.json({
+        success:"Congrats",
+        message:"New user"
+    });
+});
 app.listen(8080,()=>{
     console.log("I am running on port 8080");
     db.connect()
