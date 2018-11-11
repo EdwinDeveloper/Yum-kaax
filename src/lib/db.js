@@ -31,4 +31,5 @@ const connect = () => new Promise((resolve,reject)=>{
         })
 });
 
+//Exportamos la variable connect con la siguinete linea
 module.exports = { connect }
