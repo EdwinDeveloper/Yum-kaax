@@ -22,11 +22,26 @@ app.get('/users', async(req,res)=>{
         }
     });
 });
-app.post('/users',(req,res)=>{
-    console.log("New User in the way");
+let objUser={
+    firstNameOne:"PV",
+    firstNameTwo:"Gutierrez",
+    lastName:"Gutierrez",
+    address:"Porvenir 155",
+    email:"Misa@hotmail.com",
+    country:"Mexico",
+    city:"CDMX",
+    password:"test123",
+    phoneNumber:"32219188243"
+}
+app.post('/users', async(req,res)=>{
+    const newUsers =  await user.createUser(objUser);
+    console.log("Nuevo Usuario");
     res.json({
-        success:"Congrats",
-        message:"New user"
+        success:true,
+        message:"User Inserted",
+        payload:{
+            newUsers
+        }
     });
 });
 

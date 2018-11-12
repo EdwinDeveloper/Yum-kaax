@@ -32,13 +32,13 @@ const user=new Schema({
         trim:true,
         type:String,
         maxlength:60,
-        minlength:10
+        minlength:1
     },
     email:{
         required:false,
         type:String,
         maxlength:40,
-        minlength:20
+        minlength:2
     },
     country:{
         required:true,
@@ -53,7 +53,7 @@ const user=new Schema({
         required:true,
         trim:true,
         maxlength:40,
-        minlength:10,
+        minlength:1,
         type:String
     },
     phoneNumber:{

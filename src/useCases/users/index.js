@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 
-let newUserModel = require('../../models/users');
-let newUser = mongoose.model('user',newUserModel);
+//let newUserModel = require('../../models/users');
+//let newUser = mongoose.model('user',newUserModel);
 
 const Users=require('../../models/users').model;
 
@@ -10,10 +10,12 @@ async function get() {
     return AllUsers;
 }
 
-function createUser(){
-    
+function createUser(objUser){
+    const NewUsers= Users.create(objUser);
+    return NewUsers;
 }
 
 module.exports = {
-    get
+    get,
+    createUser
 }
