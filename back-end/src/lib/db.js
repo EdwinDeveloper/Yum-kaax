@@ -18,7 +18,7 @@ const connect = () => new Promise((resolve,reject)=>{
             //Mensaje de aviso que no hay problema
             console.warn("Connected");
             //Regresamos la promesa
-            resolve(mongoose);
+            //resolve(mongoose);
         });
 
         /*Se ejecuta el metodo on en caso de tener algun error regresa
@@ -31,4 +31,5 @@ const connect = () => new Promise((resolve,reject)=>{
         })
 });
 
+//Exportamos la variable connect con la siguinete linea
 module.exports = { connect }
