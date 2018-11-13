@@ -25,20 +25,34 @@ function findOne(req,res){
                  });
                  return users;
             }   
-    });
-    
-    
+    });   
 }
 
-function createUser(objUser){
-    const NewUsers= Users.create(objUser);
-    return NewUsers;
+async function create(objUser){
+    const { firstNameOne } = objUser;
+    console.log("existingUser hahah");
+    const existingUser = await Users.find({ firstNameOne }).exec();
+    
+    const userExist = existingUser.length > 0;
+
+    if (userExist) throw new Error('User already exists');
+
+    const NewUsers= new User(objUser);
+
+    const UserCreated = await NewUsers.save();
+    return UserCreated;
+}
+
+async function deleteUser(id){//al poner asyn sin colocar el await solo lo usamos para mencionar que vamos a regresar una promesa
+    //nunca se debe colocar un await dentro del return
+   return Users.findByIdAndDelete(id).exec();//exec es un metodo de mongoose
 }
 
 
 
 module.exports = {
     get,
-    createUser,
-    findOne
+    findOne,
+    create,
+    deleteUser
 }
