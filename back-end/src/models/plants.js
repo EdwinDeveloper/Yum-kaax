@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const plants = new Schema({
-    id_plant:{
+    name:{
         required:true,
-        type:number,
+        type:String,
+        minlength:2
     },
     specie:{
         required:true,
@@ -51,4 +52,6 @@ const plants = new Schema({
     }
 });
 
-module.exports = { plants };
+module.exports = { 
+    model:mongoose.model('plants',plants),
+    plants };
