@@ -74,6 +74,30 @@ routerPlants.put('/',async(req,res)=>{
     }
 });
 
+routerPlants.delete('/:id',(req,res)=>{
+    try {
+        const { id } = req.params;
+        console.warn(id);
+        const deletedPlant = useCasePlants.deletePlant(id);
+        res.json({
+            success:true,
+            message:"Plant deleted",
+            payload:{
+                deletedPlant
+            }
+        });
+    } catch (error) {
+        res.status(404);
+        res.json({
+            success:false,
+            message:"Could not delete the plant",
+            error:[
+                error
+            ]
+        });
+    }
+});
+
 module.exports = {
     routerPlants
 }

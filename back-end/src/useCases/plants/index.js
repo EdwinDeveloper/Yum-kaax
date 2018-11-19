@@ -25,8 +25,14 @@ const updatePlant = async(dataPlant)=>{
 
 }
 
+const deletePlant = (id) =>{
+    console.warn(id);
+    return plantsModel.findByIdAndDelete(id).exec();
+}
+
 module.exports = {
     getAllPlants,
     createPlant,
-    updatePlant
+    updatePlant,
+    deletePlant
 }
