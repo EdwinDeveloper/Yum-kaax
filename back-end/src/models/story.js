@@ -1,8 +1,8 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
-const { Schema }=mongoose;
+const { Schema } = mongoose;
 
-const story=new Schema({
+const story = new Schema({
     id_story:{
         required:true,
         type:Number
@@ -41,6 +41,6 @@ const story=new Schema({
     }
 });
 
-module.exports = { 
+module.exports = {
     story
 }

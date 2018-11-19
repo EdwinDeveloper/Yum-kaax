@@ -1,35 +1,38 @@
-//Impostamos mongoose
-const mongoose=require('mongoose');
+//Importamos el modulo de mongoose
+const mongoose = require('mongoose')
 
+//Declaramos una funcion que nos retorna una promesa
+const connect = () =>  new Promise((resolve, reject) => {
+    /*Utilizamos el metodo de mongoose connect y le pasamos 
+    nuestra ruta de la base de datos*/
+    mongoose.connect('mongodb://localhost/Yumkaax', {
+      /*Le asignamos a la variable useNewUrlParser el valor de tru
+      para evitar error por default en consola*/
+      useNewUrlParser: true 
+    })
+    /*Asignamos mongoose.conection a la constante db*/
+    const db = mongoose.connection
 
-//Realizamos promesa para la conexion a la base de datos
-const connect = () => new Promise((resolve,reject)=>{
-        //Utilizamos el metodo connect de mongoose a la direccion de la base de datos
-        mongoose.connect('mongodb://localhost/Yumkaax',{
-            useNewUrlParser:true
-        });
-        /*Declaramos la variable de conexion y le asignamos el metodo
-        de conexion de mongoose*/
-        const db = mongoose.connection;
+    /*Ejecutamos el metodo on y dentro abrimos la conexion, despues
+    le pasamos un callback*/
+    db.on('open', () => {
+      /*Mandamos desde el console que la conexion fue exitosa */
+      console.warn('connection open')
+      /*Devolvemos la promesa */
+      resolve(mongoose)
+    })
 
-        /*se ejecuta el metodo on para arrancar el evento de open y se 
-        ejecuta la promesa resolve si no hay ningun problema*/
-        db.on('open',()=>{
-            //Mensaje de aviso que no hay problema
-            console.warn("Connected");
-            //Regresamos la promesa
-            //resolve(mongoose);
-        });
+    /*Si tenemos algun error regresamos la promesa de reject para verificar que
+    tuvimos un error */
+    db.on('error', (error) => {
+      /*Avisamos por consola que no pudimos conextar y mostramos el error */
+      console.error('NO SE PUDO CONECTAR: ', error)
+      /*Devolvemos la promesa reject */
+      reject(error)
+    })
+  })
 
-        /*Se ejecuta el metodo on en caso de tener algun error regresa
-         la promesa reject*/
-        db.on('error',(error)=>{
-            //Mensaje de error
-            console.warn('Error : '+error);
-            //Regresa el reject
-            reject(mongoose);
-        })
-});
-
-//Exportamos la variable connect con la siguinete linea
-module.exports = { connect }
+  /*Exportamos la funcion connect */
+module.exports = {
+  connect
+} 

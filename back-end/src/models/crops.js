@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const { Schema }=mongoose;
+const { Schema } = mongoose;
 
-const crop=new Schema({
+const crops = new Schema({
     id_crop:{
         required:true,
         type:number
@@ -30,4 +30,4 @@ const crop=new Schema({
     }
 });
 
-module.exports = { crop } 
+module.exports = { crops }

@@ -1,11 +1,8 @@
-//Importamos moongose
 const mongoose=require('mongoose');
 
-// Deconstruimos la variable Schema
-const { Schema }=mongoose;
+const { Schema } = mongoose;
 
-//declaramos la variable shema y le asignamos un objeto tipo Shema con el siguiente modelo
-const user=new Schema({
+const Users=new Schema({
     firstNameOne:{
         required:true,
         type: String,
@@ -64,6 +61,6 @@ const user=new Schema({
 });
 
 module.exports = {
-    model:mongoose.model('user',user),
-    user
-}
+    model:mongoose.model('user',Users),
+    Users
+};
