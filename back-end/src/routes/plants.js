@@ -50,6 +50,30 @@ routerPlants.post('/',async(req,res)=>{
     }
 });
 
+routerPlants.put('/',async(req,res)=>{
+    try {
+        const putPlant = req.body;
+        console.warn(putPlant);
+        const plantPut = await useCasePlants.updatePlant(putPlant);
+        res.json({
+            success:true,
+            message:"Plant updated",
+            payload:{
+                plantPut
+            }
+        });       
+    } catch (error) {
+        res.status(404);
+        res.json({
+            success:false,
+            message:"Could not modified the plant",
+            error:[
+                error
+            ]
+        });
+    }
+});
+
 module.exports = {
     routerPlants
 }

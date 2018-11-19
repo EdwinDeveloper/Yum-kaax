@@ -6,7 +6,7 @@ const getAllPlants = async () =>{
     return plants;
 }
 
-const createPlant = async(dataPlant)=>{
+const createPlant = async (dataPlant)=>{
     const {name} = dataPlant;
     const existPlant = await plantsModel.find({name}).exec();
     const exist = existPlant.length > 0;
@@ -18,7 +18,15 @@ const createPlant = async(dataPlant)=>{
     return plantCreated;
 }
 
+const updatePlant = async(dataPlant)=>{
+    console.warn(dataPlant);
+    const plantModified = await plantsModel.findByIdAndUpdate(dataPlant._id,dataPlant).exec();
+    return plantModified;
+
+}
+
 module.exports = {
     getAllPlants,
-    createPlant
+    createPlant,
+    updatePlant
 }
