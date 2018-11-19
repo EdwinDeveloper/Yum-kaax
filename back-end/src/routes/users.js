@@ -71,6 +71,30 @@ routerUsers.delete('/:id',async (req,res)=>{
     }
 });
 
+routerUsers.put('/',async(req,res)=>{
+    try {
+        const putUser = req.body;
+        const usersPut = await useCaseUsers.findUser(putUser);
+        //console.log(usersPut);
+        res.json({
+            success:true,
+            message:"User updated",
+            payload:{
+                usersPut
+            }
+        });
+    } catch (error) {
+        res.status(404);
+        res.json({
+            success:true,
+            message:"User can not be modified",
+            error:[
+                error
+            ]
+        });
+    }
+});
+
 module.exports = {
     routerUsers
 }
