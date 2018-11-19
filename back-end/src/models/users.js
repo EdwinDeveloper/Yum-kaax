@@ -57,6 +57,14 @@ const Users=new Schema({
          required:true,
          type:String,
          minlength:8
+    },
+    id_crops:{
+        required:false,
+        type:Array
+    },
+    id_machine:{
+        required:false,
+        type:Array
     }
 });
 

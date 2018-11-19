@@ -3,10 +3,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const crops = new Schema({
-    id_crop:{
-        required:true,
-        type:number
-    },
     size:{
         required:true,
         type:String,
@@ -27,7 +23,25 @@ const crops = new Schema({
         required:true,
         type:Date,
         minlength:2
+    },
+    id_user:{
+        required:false,
+        type:String,
+        minlength:10
+    },
+    id_machine:{
+        required:false,
+        type:String,
+        minlength:10
+    },
+    cropStatus:{
+        required:true,
+        type:String,
+        minlength:4,
+        maxlength:15
     }
 });
 
-module.exports = { crops }
+module.exports = { 
+    model:mongoose.model('crop',crops),
+    crops }

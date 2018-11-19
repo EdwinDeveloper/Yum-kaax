@@ -12,7 +12,6 @@ const createUser = async (userData) =>{
     //console.log(firstNameOne, firstNameTwo, lastName);
     const existingUsers = await usersModel.find({firstNameOne}).exec();
 
-    
     const exist = existingUsers.length > 0;
     console.log(exist);
 
@@ -26,6 +25,11 @@ const createUser = async (userData) =>{
      
 }
 
+const findUser = (userData) =>{
+    console.log(userData._id);
+    return usersModel.findByIdAndUpdate(userData._id, userData).exec();
+}
+
 const deleteUserId = (id)=>{
     console.log(id);
     return usersModel.findByIdAndDelete(id).exec();
@@ -34,5 +38,6 @@ const deleteUserId = (id)=>{
 module.exports = {
     getAllUsers,
     createUser,
+    findUser,
     deleteUserId
 }
