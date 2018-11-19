@@ -1,8 +1,8 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
-const { Schema }=mongoose;
+const { Schema } = mongoose;
 
-const plant=new Schema({
+const plants = new Schema({
     id_plant:{
         required:true,
         type:number,
@@ -45,4 +45,4 @@ const plant=new Schema({
     }
 });
 
-module.exports = { plant };
+module.exports = { plants };

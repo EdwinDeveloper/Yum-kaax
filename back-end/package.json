@@ -4,7 +4,8 @@
   "description": "Sistema de hidropinia",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,10 @@
   "homepage": "https://github.com/EdwinDeveloper/Yum-kax#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "connect-multiparty": "^2.2.0"
+  },
+  "devDependencies": {
     "express": "^4.16.4",
-    "mongoose": "^5.3.10"
+    "mongoose": "^5.3.12"
   }
 }

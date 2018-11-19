@@ -1,58 +1,37 @@
-const mongoose=require('mongoose');
+//const mongoose = require('mongoose');
 
-//let newUserModel = require('../../models/users');
-//let newUser = mongoose.model('user',newUserModel);
+const usersModel = require('../../models/users').model;
 
-const Users=require('../../models/users').model;
-
-async function get() {
-    const AllUsers= await Users.find({}).exec();
-    return AllUsers;
+async function getAllUsers() {
+    const allUsers = await usersModel.find({}).exec();
+    return allUsers;
 }
 
-function findOne(req,res){
-    //console.log(req);
-    Users.findOne({
-        _id:req.params.id
-    }).exec((error,users)=>{
-            if(error){
-                console.log("There is an error : "+error);
-            }else{
-                console.log("User Found");
-                 console.log(users);
-                 res.json({
-                     users
-                 });
-                 return users;
-            }   
-    });   
-}
+const createUser = async (userData) =>{
+    const { firstNameOne,firstNameTwo,lastName }= userData;
+    //console.log(firstNameOne, firstNameTwo, lastName);
+    const existingUsers = await usersModel.find({firstNameOne}).exec();
 
-async function create(objUser){
-    const { firstNameOne } = objUser;
-    console.log("existingUser hahah");
-    const existingUser = await Users.find({ firstNameOne }).exec();
+    const exist = existingUsers.length > 0;
+    console.log(exist);
+
+    if(exist) throw new Error('User Already exist');
     
-    const userExist = existingUser.length > 0;
-
-    if (userExist) throw new Error('User already exists');
-
-    const NewUsers= new User(objUser);
-
-    const UserCreated = await NewUsers.save();
-    return UserCreated;
+        const newUser = new usersModel(userData);
+        console.log(newUser);
+        const userCreated = await newUser.save();
+        
+        return userCreated;
+     
 }
 
-async function deleteUser(id){//al poner asyn sin colocar el await solo lo usamos para mencionar que vamos a regresar una promesa
-    //nunca se debe colocar un await dentro del return
-   return Users.findByIdAndDelete(id).exec();//exec es un metodo de mongoose
+const deleteUserId = (id)=>{
+    console.log(id);
+    return usersModel.findByIdAndDelete(id).exec();
 }
-
-
 
 module.exports = {
-    get,
-    findOne,
-    create,
-    deleteUser
+    getAllUsers,
+    createUser,
+    deleteUserId
 }
