@@ -11,7 +11,20 @@ const newCrop = async (cropData)=>{
     return cropCreated;
 }
 
+const updateCrop =async(cropData)=>{
+    const modifidModel = await cropsModel.findByIdAndUpdate(cropData._id,cropData).exec();
+    console.warn(modifidModel); 
+    return modifidModel;
+}
+
+const deleteCropId = (id)=>{
+    console.warn(id);
+    return cropsModel.findByIdAndDelete(id).exec();
+}
+
 module.exports = {
     getAllCrops,
-    newCrop
+    newCrop,
+    updateCrop,
+    deleteCropId
 }

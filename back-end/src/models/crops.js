@@ -23,6 +23,22 @@ const crops = new Schema({
         required:true,
         type:Date,
         minlength:2
+    },
+    id_user:{
+        required:false,
+        type:String,
+        minlength:10
+    },
+    id_machine:{
+        required:false,
+        type:String,
+        minlength:10
+    },
+    cropStatus:{
+        required:true,
+        type:String,
+        minlength:4,
+        maxlength:15
     }
 });
 

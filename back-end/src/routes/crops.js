@@ -49,6 +49,53 @@ routerCrops.post('/',async(req,res)=>{
     }
 });
 
+routerCrops.put('/',async(req,res)=>{
+    try {
+        const putCrop = req.body;
+        const cropPut = await useCaseCrops.updateCrop(putCrop);
+        //console.log(cropPut);
+        res.json({
+        success:true,
+        message:"Crops updated",
+        payload:{
+            cropPut
+        }
+    });
+    } catch (error) {
+        res.status(404);
+        res.json({
+            success:true,
+            message:"User can not be updated",
+            error:[
+                error
+            ]
+        });
+    }
+});
+
+routerCrops.delete('/:id',async(req,res)=>{
+    try {
+        const { id } = req.params;
+        const deleteCrop = await useCaseCrops.deleteCropId(id);
+        res.json({
+            success:true,
+            message:"Crops Eliminated",
+            payload:{
+                deleteCrop
+            }
+        });
+    } catch (error) {
+        res.status(404);
+        res.json({
+            success:true,
+            message:"The crops wasn´t eliminated",
+            error:[
+                error
+            ]
+        });
+    }
+});
+
 module.exports = {
     routerCrops
 }

@@ -42,6 +42,12 @@ const plants = new Schema({
         required:false,
         type:String,
         minlength:2
+    },
+    nutrients:{
+        required:true,
+        type:String,
+        minlength:1,
+        maxlength:20
     }
 });
 
