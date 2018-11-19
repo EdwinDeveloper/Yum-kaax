@@ -6,7 +6,6 @@ const { routerUsers } = require('./routes/users');
 
 
 app.use(express.json());
-
 app.use('/users',routerUsers);
 //const users = require('./useCases/users');
 /*Habilitamos la ruta de la raiz de nuestra API*/

@@ -12,7 +12,6 @@ const createUser = async (userData) =>{
     //console.log(firstNameOne, firstNameTwo, lastName);
     const existingUsers = await usersModel.find({firstNameOne}).exec();
 
-    
     const exist = existingUsers.length > 0;
     console.log(exist);
 
