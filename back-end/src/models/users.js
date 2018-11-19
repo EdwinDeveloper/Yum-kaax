@@ -11,7 +11,6 @@ const Users=new Schema({
         minlength: 1
     },
     firstNameTwo:{
-        required: true,
         type: String,
         trim: true,
         maxlength: 30,
