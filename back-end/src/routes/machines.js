@@ -73,8 +73,28 @@ routerMachines.delete('/:id',(req,res)=>{
     }
 });
 
-routerMachines.put('/',(req,res)=>{
-    console.log(req.body);
+routerMachines.put('/',async(req,res)=>{
+    try {
+        const machineData = req.body;
+        const machinePut = await machineUserCase.updateDelete(machineData);
+        res.json({
+            success:true,
+            message:"User Updated",
+            payload:{
+                machinePut
+            }
+        });
+    } catch (error) {
+        res.status(404);
+        res.json({
+            success:false,
+            message:"Could not update the machine data",
+            error:[
+                error
+            ]
+        });
+        
+    }
 });
 
 module.exports = {

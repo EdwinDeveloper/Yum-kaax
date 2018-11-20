@@ -24,8 +24,16 @@ const deleteMachine = (id)=>{
     return machineDeleted;
 }
 
+const updateDelete = (machineData)=>{
+    const { id } = machineData;
+    console.log(id);
+    const machineUpdated = machinesModel.findByIdAndUpdate(machineData._id,machineData).exec();
+    return machineUpdated;
+}
+
 module.exports = {
     getAllMachines,
     createMachine,
-    deleteMachine
+    deleteMachine,
+    updateDelete
 }
