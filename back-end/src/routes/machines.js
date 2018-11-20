@@ -50,6 +50,33 @@ routerMachines.post('/',async(req,res)=>{
     }
 });
 
+routerMachines.delete('/:id',(req,res)=>{
+    try {
+        const { id } = req.params;
+        //console.log(id);
+        const machineDeleted = machineUserCase.deleteMachine(id);
+        res.json({
+        success:true,
+        message:"Machine deleted",
+        payload:{
+            machineDeleted
+        }
+    });
+    } catch (error) {
+        res.status(404);
+        res.json({
+            success:false,
+            error:[
+                error
+            ]
+        });
+    }
+});
+
+routerMachines.put('/',(req,res)=>{
+    console.log(req.body);
+});
+
 module.exports = {
     routerMachines
 }
