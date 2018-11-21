@@ -27,16 +27,14 @@ routerMachines.get('/',async(req,res)=>{
     }
 });
 
-routerMachines.post('/',async(req,res)=>{
+routerMachines.put('/assign',async(req,res)=>{
     try {
         const machineData = req.body;
         const { s,st,m,_id } = machineData;
-        //console.log(_id);
-        //const userId="5be8b4619fa13357a432e5fb";
-        const newMachine = await machineUserCase.createMachine(machineData,_id);
+        const newMachine = await machineUserCase.assignMachine(machineData,_id);
         res.json({
         success:true,
-        message:"New machine created",
+        message:"New machine assigned",
         payload:{
             newMachine
         }
@@ -53,6 +51,28 @@ routerMachines.post('/',async(req,res)=>{
     }
 });
 
+routerMachines.post('/',async(req,res)=>{
+    try {
+        const dataMachine = req.body;
+        const machineCreated = await machineUserCase.createMachine(dataMachine);
+        res.json({
+        success:true,
+        message:"New machine create",
+        payload:{
+            machineCreated
+        }
+    });
+    } catch (error) {
+        res.status(404);
+        res.json({
+            success:false,
+            message:"Could not create the machine",
+            error:[
+                error
+            ]
+        });
+    }
+});
 routerMachines.delete('/:id',(req,res)=>{
     try {
         const { id } = req.params;
