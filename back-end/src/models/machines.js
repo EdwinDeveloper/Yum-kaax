@@ -16,11 +16,6 @@ const machine = new Schema({
         required:true,
         type:String,
         minlength:4
-    },
-    id_user:{
-        required:false,
-        type:String,
-        minlength:4
     }
 });
 

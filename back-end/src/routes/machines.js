@@ -7,7 +7,7 @@ const machineUserCase = require('../useCases/machines');
 routerMachines.get('/',async(req,res)=>{
     try {
         const AllMachines = await machineUserCase.getAllMachines();
-        console.log(AllMachines);
+        //console.log(AllMachines);
         res.json({
             success:true,
             message:"Machines in the database",
@@ -30,7 +30,10 @@ routerMachines.get('/',async(req,res)=>{
 routerMachines.post('/',async(req,res)=>{
     try {
         const machineData = req.body;
-        const newMachine = await machineUserCase.createMachine(machineData);
+        const { s,st,m,_id } = machineData;
+        //console.log(_id);
+        //const userId="5be8b4619fa13357a432e5fb";
+        const newMachine = await machineUserCase.createMachine(machineData,_id);
         res.json({
         success:true,
         message:"New machine created",
@@ -73,8 +76,28 @@ routerMachines.delete('/:id',(req,res)=>{
     }
 });
 
-routerMachines.put('/',(req,res)=>{
-    console.log(req.body);
+routerMachines.put('/',async(req,res)=>{
+    try {
+        const machineData = req.body;
+        const machinePut = await machineUserCase.updateMachine(machineData);
+        res.json({
+            success:true,
+            message:"User Updated",
+            payload:{
+                machinePut
+            }
+        });
+    } catch (error) {
+        res.status(404);
+        res.json({
+            success:false,
+            message:"Could not update the machine data",
+            error:[
+                error
+            ]
+        });
+        
+    }
 });
 
 module.exports = {
