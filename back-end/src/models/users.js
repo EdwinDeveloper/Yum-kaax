@@ -61,7 +61,7 @@ const Users=new Schema({
         required:false,
         type:Array
     },
-    id_machine:{
+    serial_numbers:{
         required:false,
         type:Array
     }

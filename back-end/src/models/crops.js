@@ -15,7 +15,7 @@ const crops = new Schema({
         maxlength:10
     },
     wheader:{
-        required:true,
+        required:false,
         type:String,
         minlength:2
     },

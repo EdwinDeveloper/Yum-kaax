@@ -8,21 +8,21 @@ async function getAllUsers() {
 }
 
 const createUser = async (userData) =>{
-    const { firstNameOne,firstNameTwo,lastName }= userData;
-    //console.log(firstNameOne, firstNameTwo, lastName);
-    const existingUsers = await usersModel.find({firstNameOne}).exec();
+    const {f,fo,l,a,email,c,y,p,phoneNumber }= userData;
+    //console.log(email, phoneNumber);
+    const existingPhone = await usersModel.find({phoneNumber}).exec();
+    const existingEmail = await usersModel.find({email}).exec();
+    const exist = existingPhone.length + existingEmail.length;
+    //console.log("se cumplen ambos",exist);
+    //console.log("El correo existe : ",existingEmail.length > 0);
 
-    const exist = existingUsers.length > 0;
-    console.log(exist);
+    if(exist>0) throw new Error('User Already exist');
 
-    if(exist) throw new Error('User Already exist');
-    
         const newUser = new usersModel(userData);
-        console.log(newUser);
+        //console.log(newUser);
         const userCreated = await newUser.save();
-        
         return userCreated;
-     
+    
 }
 
 const findUser = (userData) =>{
