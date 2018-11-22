@@ -56,13 +56,17 @@ const assignMachine = async (dataMachine,_id)=>{
         }else{
             throw new Error('The machine does not exist');
         }
-    // const newMachineObj = {
-    //     serial_number,status,model
-    // }
-    //console.log("Machine find it",newMachineObj);
-    // const newMachine = new machinesModel(newMachineObj);
-    // const machineCreated = newMachine.save();
-    // return machineCreated;
+}
+
+const unassignMachine = async(machineData)=>{
+    const { serial_number , status , model , _id } = machineData; 
+    const existinMachine = await machinesModel.find({serial_number}).exec();
+    if(existinMachine.length > 0){
+        
+    }else{
+        throw new Error('Machine does not exist');
+    }
+    console.log("Data unassign : ",existinMachine);
 }
 
 const createMachine = async(dataMachine)=>{
@@ -88,6 +92,7 @@ const updateMachine = (machineData)=>{
 module.exports = {
     getAllMachines,
     assignMachine,
+    unassignMachine,
     deleteMachine,
     updateMachine,
     createMachine
