@@ -6,7 +6,7 @@ const useCaseUsers = require('../useCases/users');
 routerAuth.post('/login',async(req,res)=>{
     try {
         const { email , password } = req.body;
-        
+        console.log(email,password);
         const token = await useCaseUsers.loginUser(email,password);
         //console.log(token);
         res.json({

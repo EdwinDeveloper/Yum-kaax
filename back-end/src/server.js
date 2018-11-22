@@ -10,11 +10,13 @@ const routerAuth = require('./routes/auth').routerAuth;
 console.log(routerPlants.route);
 
 app.use(express.json());
+
 app.use('/auth',routerAuth);
 app.use('/users',routerUsers);
 app.use('/crops',routerCrops);
 app.use('/plants',routerPlants);
 app.use('/machines',routerMachines);
+
 //const users = require('./useCases/users');
 /*Habilitamos la ruta de la raiz de nuestra API*/
 

@@ -5,13 +5,6 @@ const routerUsers = express.Router();
 const useCaseUsers = require('../useCases/users');
 
 const auth = require('../middlewares/auth');
-// routerUsers.get('/',(req,res)=>{
-//     /*Mandamos la respuesta */
-//     res.json({
-//         success:true,
-//         message:"Connected to Yumkaax Data Base"
-//     });
-// });
 routerUsers.use(auth);
 
 routerUsers.get('/', async(req,res)=>{
