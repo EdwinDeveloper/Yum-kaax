@@ -1,8 +1,9 @@
 const express = require('express');
-
 const routerMachines = express.Router();
-
 const machineUserCase = require('../useCases/machines');
+
+const auth = require('../middlewares/auth');
+routerMachines.use(auth);
 
 routerMachines.get('/',async(req,res)=>{
     try {
@@ -43,10 +44,33 @@ routerMachines.put('/assign',async(req,res)=>{
         res.status(404);
         res.json({
             success:false,
-            message:"Could not create the machine",
+            message:"Could not assign the machine",
             error:{
                 error
             }
+        });
+    }
+});
+
+routerMachines.put('/unassign',async(req,res)=>{
+    try {
+        const maquineData = req.body;
+        const unassignMachine = await machineUserCase.unassignMachine(maquineData);
+        res.json({
+            success:true,
+            message:"Machine unassigned",
+            payload:{
+                unassignMachine
+            }
+        });
+    } catch (error) {
+        res.status(404);
+        res.json({
+            success:false,
+            message:"Could not Unassign the machine",
+            error:[
+                error
+            ]
         });
     }
 });

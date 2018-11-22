@@ -46,11 +46,12 @@ const Users=new Schema({
         type:String
     },
     password:{
+        type:String,
         required:true,
         trim:true,
-        maxlength:40,
-        minlength:1,
-        type:String
+        maxlength:70,
+        minlength:1
+        
     },
     phoneNumber:{
          required:true,
