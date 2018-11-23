@@ -63,7 +63,7 @@ const validatePassword = async(email,password)=>{
 }
 
 const loginUser = async (email , password)=>{
-    //console.log(email,password);
+    console.log(email,password);
     const userExist = await usersModel.findOne({email}).exec();
     if(!userExist) throw new Error('User does not exist');
     const isValidPassword = await validatePassword(userExist.email , password);
