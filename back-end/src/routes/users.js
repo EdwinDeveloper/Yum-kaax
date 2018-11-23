@@ -4,13 +4,8 @@ const routerUsers = express.Router();
 
 const useCaseUsers = require('../useCases/users');
 
-// routerUsers.get('/',(req,res)=>{
-//     /*Mandamos la respuesta */
-//     res.json({
-//         success:true,
-//         message:"Connected to Yumkaax Data Base"
-//     });
-// });
+const auth = require('../middlewares/auth');
+routerUsers.use(auth);
 
 routerUsers.get('/', async(req,res)=>{
     const getAllUsers =  await useCaseUsers.getAllUsers();

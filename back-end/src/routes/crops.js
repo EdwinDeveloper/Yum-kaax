@@ -1,8 +1,9 @@
 const express = require('express');
-
 const routerCrops = express.Router();
-
 const useCaseCrops = require('../useCases/crops');
+
+const auth = require('../middlewares/auth');
+routerCrops.use(auth);
 
 routerCrops.get('/',async(req,res)=>{
     try {

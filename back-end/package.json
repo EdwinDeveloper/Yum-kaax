@@ -18,11 +18,13 @@
   },
   "homepage": "https://github.com/EdwinDeveloper/Yum-kax#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
-    "connect-multiparty": "^2.2.0"
+    "connect-multiparty": "^2.2.0",
+    "jsonwebtoken": "^8.4.0"
   },
   "devDependencies": {
     "express": "^4.16.4",
-    "mongoose": "^5.3.12"
+    "mongoose": "^5.3.13"
   }
 }

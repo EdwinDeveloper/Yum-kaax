@@ -4,6 +4,9 @@ const routerPlants = express.Router();
 
 const useCasePlants = require('../useCases/plants');
 
+const auth = require('../middlewares/auth');
+routerPlants.use(auth);
+
 routerPlants.get('/', async(req,res)=>{
     try {
         const allPlants = await useCasePlants.getAllPlants();
