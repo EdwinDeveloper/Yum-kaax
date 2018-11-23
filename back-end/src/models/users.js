@@ -3,46 +3,43 @@ const mongoose=require('mongoose');
 const { Schema } = mongoose;
 
 const Users=new Schema({
-    firstNameOne:{
+    name:{
         required:true,
         type: String,
         trim: true,
-        maxlength: 30,
-        minlength: 1
-    },
-    firstNameTwo:{
-        type: String,
-        trim: true,
-        maxlength: 30,
+        maxlength: 50,
         minlength: 1
     },
     lastName:{
         require:true,
         type:String,
         trim:true,
-        maxlength:30,
+        maxlength:50,
         minlength:1
     },
     address:{
-        required:true,
+        required:false,
         trim:true,
         type:String,
-        maxlength:60,
-        minlength:1
+        maxlength:60
     },
     email:{
-        required:false,
+        required:true,
         type:String,
         maxlength:40,
         minlength:2
     },
-    country:{
+    userName:{
         required:true,
         type:String,
         minlength:2
     },
+    country:{
+        required:false,
+        type:String
+    },
     city:{
-        required:true,
+        required:false,
         type:String
     },
     password:{
@@ -54,9 +51,9 @@ const Users=new Schema({
         
     },
     phoneNumber:{
-         required:true,
+         required:false,
          type:String,
-         minlength:8
+         maxlength:20
     },
     id_crops:{
         required:false,

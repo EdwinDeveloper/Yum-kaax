@@ -2,6 +2,7 @@ const express = require('express');
 const routerAuth = express.Router();
 const jwt = require('../lib/jwt');
 const useCaseUsers = require('../useCases/users');
+const useCaseAuth = require('../useCases/auth');
 
 routerAuth.post('/login',async(req,res)=>{
     try {
@@ -24,6 +25,26 @@ routerAuth.post('/login',async(req,res)=>{
             error:[
                 error
             ]
+        });
+    }
+});
+
+routerAuth.post('/signin',async(req,res)=>{
+    try {
+        const dataNewUser = req.body;
+        const userSigned = await useCaseAuth.signUp(dataNewUser);
+        res.json({
+            success:true,
+            message:"Welcome to YumKaax",
+            payload:{
+                userSigned
+            }
+        });
+    } catch (error) {
+        res.status(401);
+        res.json({
+            success:false,
+            message:"There is a problem width the users informacion or the machine"
         });
     }
 });

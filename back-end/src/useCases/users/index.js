@@ -4,50 +4,63 @@ const usersModel = require('../../models/users').model;
 const jwt = require('../../lib/jwt');
 const bcrypt = require('../../lib/bcrypt');
 
+const validateUserExist = async (dataUser)=>{
+    let userUserNameExist=[],userEmailExist=[],userPhoneExist=[];
+    const {name,lastName,email="",userName="",password,phoneNumber="",serial_number,model} = dataUser;
+    if(email !="" && userName !=""){
+         userUserNameExist = await usersModel.find({userName}).exec();
+         userEmailExist = await usersModel.find({email}).exec();
+         if(phoneNumber != ""){
+            userPhoneExist = await usersModel.find({phoneNumber}).exec();
+            if(userPhoneExist.length>0) return "PHONE EXIST";
+         }
+         if(userUserNameExist.length>0) return "USERNAME EXIST";
+         if(userEmailExist.length>0) return "EMAIL EXIST";
+    }
+    return false
+}
+
 async function getAllUsers() {
     const allUsers = await usersModel.find({}).exec();
     return allUsers;
 }
 
 const createUser = async (userData) =>{
-    const {firstNameOne,
-        firstNameTwo,
+    const {name,
         lastName,
-        address,
+        address="",
         email,
-        country,
-        city,
+        userName,
+        country="",
+        city="",
         password,
-        phoneNumber
+        phoneNumber=""
      } = userData;
 
-    console.log("firstData",userData);
-    const existingPhone = await usersModel.find({phoneNumber}).exec();
+    const existingUserName = await usersModel.find({userName}).exec();
     const existingEmail = await usersModel.find({email}).exec();
-    const exist = existingPhone.length + existingEmail.length;
-
+    const exist = existingUserName.length + existingEmail.length;
+     console.log("Esi: ",existingEmail.length);
     if(exist>0) throw new Error('User Already exist');
 
         const hashPassword = await bcrypt.create(password);
         const newUserJson = {
-            firstNameOne,
-            firstNameTwo,
+            name,
             lastName,
             address,
             email,
+            userName,
             country,
             city,
             password:hashPassword,
             phoneNumber
         }
-            console.log("Second data",newUserJson, typeof hashPassword);
           const newUser = new usersModel(newUserJson);
           const userCreated = await newUser.save();
           return userCreated;
 }
 
 const findUser = (userData) =>{
-    //console.log(userData._id);
     return usersModel.findByIdAndUpdate(userData._id, userData).exec();
 }
 
@@ -79,5 +92,6 @@ module.exports = {
     findUser,
     deleteUserId,
     loginUser,
-    validatePassword
+    validatePassword,
+    validateUserExist
 }

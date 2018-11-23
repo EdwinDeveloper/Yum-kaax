@@ -3,22 +3,22 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const crops = new Schema({
-    size:{
+    plantAmount:{
         required:true,
         type:String,
         minlength:4,
         maxlength:10
     },
-    cropTime:{
+    cropTime:{//Tiempo estimado para el desarrollo del cultivo
         required:true,
         type:String,
         maxlength:10
     },
-    wheader:{
-        required:false,
-        type:String,
-        minlength:2
-    },
+    // wheader:{
+    //     required:false,
+    //     type:String,
+    //     minlength:2
+    // },
     date:{
         required:true,
         type:Date,

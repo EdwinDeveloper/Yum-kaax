@@ -2,20 +2,23 @@ const machinesModel = require('../../models/machines').model;
 const usersModel = require('../../models/users').model;
 const userCase = require('../users');
 
+const validateMachineExist = async(machineData)=>{
+    const { serial_number , model } = machineData;
+    const existMachine = await machinesModel.find({serial_number}).exec();
+    if(existMachine.length>0){
+        if(existMachine[0].status=="active") return "MACHINE STATUS ACTIVE";
+        return "MACHINE AVAILABLE";
+    }else{
+        return "MACHINE DOES NOT EXIST";
+    }
+}
+
 const getAllMachines = async () =>{
     const allMachines = await machinesModel.find({}).exec();
     return allMachines;
 }
 
 const assignMachine = async (dataMachine,_id)=>{
-    /*FORMATO DE ASIGNACION DE MAQUINAS
-    ejemplo
-                "serial_number": "ZAzZZAZZZZ",//numero de serie de la maquina
-                "status": "inactive",//status de la maquina
-                "model": "H86179",//modelo de la maquina
-                "id_user":"5bea3ba9c9f6ad0b03d8d34c"//id del usuario al que se le asignara
-    */
-    //console.log(dataMachine,"  :   ",_id);
     /*Deconstruimos el objeto dataMachine para obtener el serial introducido*/
     const {serial_number , status , model } = dataMachine;
     //console.warn(serial_number,status,model);
@@ -35,10 +38,9 @@ const assignMachine = async (dataMachine,_id)=>{
         /*Retornamos todo el array*/
         return reducer;
     },[]);
-    console.log("existingSerial",);
     /*Si existinSerial tiene algo dentro por ende el serial introducido marca
     error y no deja asignarlo al usuario*/
-    if(existingSerial.length > 0) throw new Error('The machine is already assigned');
+    if(existingSerial.length > 0) return 'MACHINE ALREADY ASSIGNED';
     /*Si el usuario no lo tiene asignado, se añade el serial nuevo al array
     de seriales*/
     const allIdMachine = [...SerialMachines,serial_number];
@@ -67,14 +69,21 @@ const assignMachine = async (dataMachine,_id)=>{
             /*Buscamos la maquina y le actualizamos el status con el objeto que creamos*/
             const updateMachine = await machinesModel.findByIdAndUpdate(existMachine[0]._id,machineJson).exec();
             /*Retornamos el resultado*/
-            console.log(updateMachine);
+            //console.log(updateMachine);
             return updateMachine;
         }else{
-            throw new Error('The machine does not exist');
+            return "MACHINE DOES NOT EXIST"
         }
 }
 
 const unassignMachine = async(machineData)=>{
+    /*FORMATO DE ASIGNACION DE MAQUINAS
+    ejemplo
+                "serial_number": "ZAzZZAZZZZ",//numero de serie de la maquina
+                "status": "inactive",//status de la maquina
+                "model": "H86179",//modelo de la maquina
+                "id_user":"5bea3ba9c9f6ad0b03d8d34c"//id del usuario al que se le des-asignara
+    */
     const { serial_number , status , model , _id } = machineData; 
     const existinMachine = await machinesModel.find({serial_number}).exec();
     const idExistingMachine = existinMachine[0]._id;
@@ -110,7 +119,7 @@ const createMachine = async(dataMachine)=>{
         if( existMachine.length > 0 ) throw new Error('The machine already exist');
         const newMachine = new machinesModel(dataMachine);
         const machineCreated = newMachine.save();
-        return machineCreated;
+        return machineCreated[0];
 }
 
 const deleteMachine = (id)=>{
@@ -129,5 +138,6 @@ module.exports = {
     unassignMachine,
     deleteMachine,
     updateMachine,
-    createMachine
+    createMachine,
+    validateMachineExist
 }
