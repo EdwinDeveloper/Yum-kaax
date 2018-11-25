@@ -7,6 +7,7 @@ const getAllPlants = async () =>{
 }
 
 const createPlant = async (dataPlant)=>{
+    console.log(dataPlant);
     const {name} = dataPlant;
     const existPlant = await plantsModel.find({name}).exec();
     const exist = existPlant.length > 0;

@@ -27,6 +27,29 @@ routerCrops.get('/',async(req,res)=>{
     }
 });
 
+routerCrops.post('/find',async(req,res)=>{
+    try {
+        const idUser = req.body;
+        const cropsUserFind = await useCaseCrops.getPerUserCrops(idUser);
+        res.json({
+            success:true,
+            message:"Crops of the user",
+            payload:{
+                cropsUserFind
+            }
+        });
+    } catch (error) {
+        res.status(404);
+        res.json({
+            success:false,
+            message:"Could not show the crops",
+            error:[
+                error
+            ]
+        });
+    }
+});
+
 routerCrops.post('/',async(req,res)=>{
     try {
         const cropData = req.body;
@@ -43,6 +66,29 @@ routerCrops.post('/',async(req,res)=>{
         res.json({
             success:false,
             message:"We can not create the crop",
+            error:[
+                error
+            ]
+        });
+    }
+});
+
+routerCrops.post('/create',(req,res)=>{
+    try {
+        const cropData = req.body;
+        const newCrop = useCaseCrops.CreateAssignCrop(cropData);
+        res.json({
+            success:true,
+            message:"Machine Created",
+            payload:{
+                newCrop
+            }
+        });
+    } catch (error) {
+        res.status(404);
+        res.json({
+            success:false,
+            message:"Could not create the crop",
             error:[
                 error
             ]

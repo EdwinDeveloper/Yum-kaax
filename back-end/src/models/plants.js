@@ -19,17 +19,17 @@ const plants = new Schema({
         minlength:2
     },
     color:{
-        required:false,
+        required:true,
         type:String,
         minlength:2
     },
     size:{
-        required:false,
+        required:true,
         type:String,
         minlength:2
     },
     weight:{
-        required:false,
+        required:true,
         type:String,
         minlength:2
     },
@@ -37,18 +37,21 @@ const plants = new Schema({
         required:true,
         type:String,
         minlength:2,
-        maxlength:60
+        maxlength:200
     },
     height:{
-        required:false,
+        required:true,
         type:String,
         minlength:2
     },
     nutrients:{
         required:true,
+        type:Array
+    },
+    growTime:{
+        required:true,
         type:String,
-        minlength:1,
-        maxlength:20
+        minlength:3
     }
 });
 
