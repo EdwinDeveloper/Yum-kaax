@@ -9,7 +9,6 @@ routerAuth.post('/login',async(req,res)=>{
         const { email , password } = req.body;
         console.log(email,password);
         const token = await useCaseUsers.loginUser(email,password);
-        //console.log(token);
         res.json({
             success:true,
             message:"Logged successfuly",
@@ -33,6 +32,7 @@ routerAuth.post('/signin',async(req,res)=>{
     try {
         const dataNewUser = req.body;
         const userSigned = await useCaseAuth.signUp(dataNewUser);
+        //console.log(userSigned)
         res.json({
             success:true,
             message:"Welcome to YumKaax",

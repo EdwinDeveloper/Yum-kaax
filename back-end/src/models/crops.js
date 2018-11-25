@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const crops = new Schema({
     plantAmount:{
         required:true,
-        type:String,
+        type:Number,
         minlength:4,
         maxlength:10
     },
@@ -24,21 +24,26 @@ const crops = new Schema({
         type:Date,
         minlength:2
     },
-    id_user:{
-        required:false,
-        type:String,
-        minlength:10
-    },
-    id_machine:{
-        required:false,
-        type:String,
-        minlength:10
-    },
     cropStatus:{
         required:true,
         type:String,
         minlength:4,
         maxlength:15
+    },
+    id_user:{
+        required:false,
+        type:String,
+        minlength:10
+    },
+    id_plant:{
+        required:true,
+        type:String,
+        minlength:1
+    },
+    id_machine:{
+        required:false,
+        type:String,
+        minlength:10
     }
 });
 

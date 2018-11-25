@@ -7,7 +7,12 @@ const machine = new Schema({
         type:String,
         minlength:4
     },
-    status:{
+    recordStatus:{
+        required:false,
+        type:String,
+        minlength:4
+    },
+    useStatus:{
         required:false,
         type:String,
         minlength:4

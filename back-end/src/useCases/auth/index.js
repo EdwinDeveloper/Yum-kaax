@@ -12,7 +12,8 @@ const signUp = async (dataNewUser)=>{
    if(existUserData==false){/*Si no existe el usuario puede proceder*/
         const existingMachine = await machineUseCaes.validateMachineExist(dataNewUser);
         if(existingMachine=="MACHINE DOES NOT EXIST") return existingMachine;
-        if(existingMachine=="MACHINE STATUS ACTIVE") return "MACHINE ASSIGNED"
+        if(existingMachine=="MACHINE STATUS ACTIVE") return "MACHINE ASSIGNED";
+        if(existingMachine=="MODELS DOES NOT MATCH") return existingMachine
         if(existingMachine=="MACHINE AVAILABLE"){/*Si si existe la maquina y no esta asignada en la base de datos puede avanzar*/
             const machineModel = {
                 serial_number
@@ -20,7 +21,6 @@ const signUp = async (dataNewUser)=>{
             const createUserLoggin = await userUseCases.createUser(dataNewUser);
             const userCreatedId = createUserLoggin._id;
             const machineAssigned = await machineUseCaes.assignMachine(machineModel,userCreatedId);
-            console.log("login machine assigned",machineAssigned);
             const resulJson ={
                 createUserLoggin,
                 machineAssigned

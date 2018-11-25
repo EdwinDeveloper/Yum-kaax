@@ -25,6 +25,11 @@ async function getAllUsers() {
     return allUsers;
 }
 
+const getSingleUser = async(idUser) =>{
+    const singleUser = await usersModel.find({"_id":idUser}).exec();
+    return singleUser;
+}
+
 const createUser = async (userData) =>{
     const {name,
         lastName,
@@ -40,7 +45,7 @@ const createUser = async (userData) =>{
     const existingUserName = await usersModel.find({userName}).exec();
     const existingEmail = await usersModel.find({email}).exec();
     const exist = existingUserName.length + existingEmail.length;
-     console.log("Esi: ",existingEmail.length);
+     //console.log("Esi: ",existingEmail.length);
     if(exist>0) throw new Error('User Already exist');
 
         const hashPassword = await bcrypt.create(password);
@@ -76,7 +81,7 @@ const validatePassword = async(email,password)=>{
 }
 
 const loginUser = async (email , password)=>{
-    console.log(email,password);
+    //console.log(email,password);
     const userExist = await usersModel.findOne({email}).exec();
     if(!userExist) throw new Error('User does not exist');
     const isValidPassword = await validatePassword(userExist.email , password);
@@ -93,5 +98,6 @@ module.exports = {
     deleteUserId,
     loginUser,
     validatePassword,
-    validateUserExist
+    validateUserExist,
+    getSingleUser
 }
