@@ -3,6 +3,7 @@ const routerAuth = express.Router();
 const jwt = require('../lib/jwt');
 const useCaseUsers = require('../useCases/users');
 const useCaseAuth = require('../useCases/auth');
+const useCaseCrops=require('../useCases/crops');
 
 routerAuth.post('/login',async(req,res)=>{
     try {
@@ -45,6 +46,30 @@ routerAuth.post('/signin',async(req,res)=>{
         res.json({
             success:false,
             message:"There is a problem width the users informacion or the machine"
+        });
+    }
+});
+
+routerAuth.post('/test',async(req,res)=>{
+    try {
+        const datos = req.body;
+        //console.log(datos);
+        const resultTest = await useCaseCrops.checkActivateCropStatus(datos);
+        res.json({
+            success:true,
+            message:"Test Correcto",
+            payload:{
+                resultTest
+            }
+        });
+    } catch (error) {
+        res.status(404);
+        res.json({
+            success:false,
+            message:"Test failed",
+            error:[
+                error
+            ]
         });
     }
 });

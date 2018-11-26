@@ -45,7 +45,7 @@ const checkRecordStatus = async (machineData)=>{
 }
 
 const updateRecordStatusMachine = async(id_machine) =>{
-     const machineUpdated = await machinesModel.findOneAndUpdate(id_machine,{"useStatus":"true"}).exec();
+     const machineUpdated = await machinesModel.findByIdAndUpdate(id_machine,{"useStatus":"true"}).exec();
     return machineUpdated;
 }
 
