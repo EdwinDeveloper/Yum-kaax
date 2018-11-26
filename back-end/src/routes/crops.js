@@ -73,13 +73,13 @@ routerCrops.post('/',async(req,res)=>{
     }
 });
 
-routerCrops.post('/create',(req,res)=>{
+routerCrops.post('/create',async(req,res)=>{
     try {
         const cropData = req.body;
-        const newCrop = useCaseCrops.CreateAssignCrop(cropData);
+        const newCrop = await useCaseCrops.CreateAssignCrop(cropData);
         res.json({
             success:true,
-            message:"Machine Created",
+            message:"Crop Created",
             payload:{
                 newCrop
             }

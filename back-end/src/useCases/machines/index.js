@@ -20,6 +20,62 @@ const getAllMachines = async () =>{
     return allMachines;
 }
 
+const findMachine = async (idMachine)=>{
+    const machineSelected = await machinesModel.find({"_id":idMachine}).exec();
+    if(machineSelected.length==0) return "MACHINES DOES NOT EXIST";
+    return machineSelected;
+}
+
+const checkuseStatusMachine =  async(machineData)=>{
+    const {useStatus} = machineData[0];
+    if(useStatus=="true") return "MACHINE IN USE";
+    if(useStatus=="false"){
+        return "MACHINE IS NOT IN USE"
+    }
+    return "PROBLEM IN checkuseStatusMachine";
+}
+
+const checkRecordStatus = async (machineData)=>{
+    const {recordStatus} = machineData[0];
+    if(recordStatus=="active"){
+        return "MACHINE ACTIVE";
+    }else{
+        return "MACHINE INACTIVE";
+    }
+}
+
+const updateRecordStatusMachine = async(id_machine) =>{
+     const machineUpdated = await machinesModel.findOneAndUpdate(id_machine,{"useStatus":"true"}).exec();
+    return machineUpdated;
+}
+
+// const findOneOrManyMachine = (machineData)=>{
+//     const {_id="",serial_number="",recordStatus="",useStatus="",model=""}=machineData;
+//     const machineSelected = machinesModel.find({_id,serial_number,recordStatus,useStatus,model}).exec();
+//     return machineSelected;
+// }
+
+const checkAssignToUser = async({id_user,id_machine}) =>{
+    const userSelected = await userCase.getSingleUser(id_user);
+    if(userSelected=="USER DOES NOT EXIST") return userSelected;
+    const userSerials =userSelected[0].serial_numbers;
+    const machineSelected=await machinesModel.findById(id_machine).exec();
+    const machineSerial = machineSelected.serial_number;
+    const userMachineAsign = userSerials.reduce((reduce,currentSerial,index)=>{
+        if(currentSerial==machineSerial){
+            return [...currentSerial,machineSerial];
+        }
+        return reduce;
+    });
+    const finalSerial = [];
+    finalSerial.push(userMachineAsign);
+    if(finalSerial.length>0){
+        return "MACHINE ASSIGNED TO THE USER";
+    }else{
+        return "MACHINE NOT ASSIGNED TO THE USER";
+    }
+}
+
 const assignMachine = async (dataMachine,_id)=>{
     /*Deconstruimos el objeto dataMachine para obtener el serial introducido*/
     const {serial_number , recordStatus , model } = dataMachine;
@@ -132,5 +188,10 @@ module.exports = {
     deleteMachine,
     updateMachine,
     createMachine,
-    validateMachineExist
+    validateMachineExist,
+    findMachine,
+    checkuseStatusMachine,
+    checkAssignToUser,
+    checkRecordStatus,
+    updateRecordStatusMachine
 }
