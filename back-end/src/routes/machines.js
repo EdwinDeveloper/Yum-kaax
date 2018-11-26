@@ -32,9 +32,8 @@ routerMachines.put('/assign',async(req,res)=>{
     try {
         
         const machineData = req.body;
-        const { s,st,m,id_user} = machineData;
-        //console.log(_id);
-        const newMachine = await machineUserCase.assignMachine(machineData,id_user);
+        const { s,st,m,_id} = machineData;
+        const newMachine = await machineUserCase.assignMachine(machineData,_id);
         res.json({
         success:true,
         message:"New machine assigned",
@@ -80,7 +79,6 @@ routerMachines.put('/unassign',async(req,res)=>{
 routerMachines.post('/',async(req,res)=>{
     try {
         const dataMachine = req.body;
-        //console.log(dataMachine);
         const machineCreated = await machineUserCase.createMachine(dataMachine);
         res.json({
         success:true,

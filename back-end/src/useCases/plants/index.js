@@ -6,7 +6,14 @@ const getAllPlants = async () =>{
     return plants;
 }
 
+const getSinglePlants = async(id_plant)=>{
+    const getPlant = await plantsModel.findById(id_plant).exec();
+    if(getPlant==null) return "PLANT DOES NOT EXIST";
+    return "PLANT EXIST";
+}
+
 const createPlant = async (dataPlant)=>{
+    console.log(dataPlant);
     const {name} = dataPlant;
     const existPlant = await plantsModel.find({name}).exec();
     const exist = existPlant.length > 0;
@@ -32,6 +39,7 @@ const deletePlant = (id) =>{
 
 module.exports = {
     getAllPlants,
+    getSinglePlants,
     createPlant,
     updatePlant,
     deletePlant
