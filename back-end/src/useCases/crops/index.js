@@ -1,5 +1,7 @@
 const cropsModel = require('../../models/crops').model;
 const userModel = require('../../models/users').model;
+const useCasesMachine =require('../machines');
+const useCasePlant =require('../plants');
 
 const getAllCrops = async ()=>{
     const allCrops =  await cropsModel.find({}).exec();
@@ -16,15 +18,34 @@ const getPerUserCrops = async (cropId)=>{
     return userCrops;
 }
 
-const CreateAssignCrop= async (dataCrop) =>{
-    const {plantAmount,cropTime,date,cropStatus,id_user,id_plant,id_machine} = dataCrop;
-    console.log(dataCrop);
-}
-
 const newCrop = async (cropData)=>{
     const newCrop = new cropsModel(cropData);
     const cropCreated = await newCrop.save();
     return cropCreated;
+}
+const CreateAssignCrop= async (dataCrop) =>{
+    const {plantAmount,cropTime,date,cropStatus,id_user,id_plant,id_machine} = dataCrop;
+    const getPlant = await useCasePlant.getSinglePlants(id_plant);
+    if(getPlant=="PLANT DOES NOT EXIST") return getPlant;
+    const machineSelected= await useCasesMachine.findMachine(id_machine);
+    if(machineSelected=="MACHINES DOES NOT EXIST") return machineSelected;
+    const recordStatus = await useCasesMachine.checkRecordStatus(machineSelected);
+    if(recordStatus=="MACHINE INACTIVE") return recordStatus;
+    const assignedToUser = await useCasesMachine.checkAssignToUser({id_user,id_machine});
+    if(assignedToUser=="USER DOES NOT EXIST") return assignedToUser;
+    if(assignedToUser=="MACHINE NOT ASSIGNED TO THE USER") return assignedToUser;
+    const machineUseStatus = await useCasesMachine.checkuseStatusMachine(machineSelected);
+    if(machineUseStatus=="MACHINE IN USE") return machineUseStatus;
+    if((assignedToUser=="MACHINE ASSIGNED TO THE USER") && (machineUseStatus=="MACHINE IS NOT IN USE") && (getPlant=="PLANT EXIST") && (recordStatus=="MACHINE ACTIVE")){
+        //console.log("DENTRO",assignedToUser," :::  ",machineUseStatus,"  ::  ",getPlant,"  :::  ",recordStatus);
+        const machineUpdate = await useCasesMachine.updateRecordStatusMachine(id_machine);
+        const cropCreated = await newCrop(dataCrop);
+        const newCropJsonInfo = {
+            CropInfo:cropCreated,
+            MachineInfo:machineUpdate
+        }
+        return newCropJsonInfo;
+    }
 }
 
 const updateCrop =async(cropData)=>{
@@ -36,10 +57,6 @@ const updateCrop =async(cropData)=>{
 const deleteCropId = (id)=>{
     console.warn(id);
     return cropsModel.findByIdAndDelete(id).exec();
-}
-
-const assignCrops = (userData) =>{
-
 }
 
 module.exports = {

@@ -25,9 +25,11 @@ async function getAllUsers() {
     return allUsers;
 }
 
+
 const getSingleUser = async(idUser) =>{
     const singleUser = await usersModel.find({"_id":idUser}).exec();
-    return singleUser;
+    if(singleUser.length>0) return singleUser;
+    return "USER DOES NOT EXIST";
 }
 
 const createUser = async (userData) =>{
