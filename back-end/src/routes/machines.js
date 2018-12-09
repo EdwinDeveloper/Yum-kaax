@@ -126,7 +126,7 @@ routerMachines.put('/',async(req,res)=>{
         const machinePut = await machineUserCase.updateMachine(machineData);
         res.json({
             success:true,
-            message:"User Updated",
+            message:"Machine Updated",
             payload:{
                 machinePut
             }
