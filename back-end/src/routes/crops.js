@@ -90,7 +90,7 @@ routerCrops.post('/create',async(req,res)=>{
             success:false,
             message:"Could not create the crop",
             error:[
-                error
+                error.message
             ]
         });
     }

@@ -2,13 +2,12 @@ const plantsModel = require('../../models/plants').model;
 
 const getAllPlants = async () =>{
     const plants = await plantsModel.find({}).exec();
-    console.log(plants);
     return plants;
 }
 
 const getSinglePlants = async(id_plant)=>{
     const getPlant = await plantsModel.findById(id_plant).exec();
-    if(getPlant==null) return "PLANT DOES NOT EXIST";
+    if(getPlant==null) throw new Error("PLANT DOES NOT EXIST");
     return "PLANT EXIST";
 }
 

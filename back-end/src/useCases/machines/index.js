@@ -7,11 +7,11 @@ const validateMachineExist = async(machineData)=>{
     const existMachine = await machinesModel.find({serial_number}).exec();
     if(existMachine.length>0){
         const compareModel = existMachine[0].model == model;
-        if(!compareModel) return "MODELS DOES NOT MATCH";
-        if(existMachine[0].recordStatus=="active") return "MACHINE STATUS ACTIVE";
+        if(!compareModel) throw new Error("MODELS DOES NOT MATCH");
+        if(existMachine[0].recordStatus=="active") throw new Error("MACHINE ASSIGNED");
         return "MACHINE AVAILABLE";
     }else{
-        return "MACHINE DOES NOT EXIST";
+        throw new Error("MACHINE DOES NOT EXIST");
     }
 }
 
@@ -22,13 +22,13 @@ const getAllMachines = async () =>{
 
 const findMachine = async (idMachine)=>{
     const machineSelected = await machinesModel.find({"_id":idMachine}).exec();
-    if(machineSelected.length==0) return "MACHINES DOES NOT EXIST";
+    if(machineSelected.length==0) throw new Error("MACHINES DOES NOT EXIST");
     return machineSelected;
 }
 
 const checkuseStatusMachine =  async(machineData)=>{
     const {useStatus} = machineData[0];
-    if(useStatus=="true") return "MACHINE IN USE";
+    if(useStatus=="true") throw new Error("MACHINE IN USE");
     if(useStatus=="false"){
         return "MACHINE IS NOT IN USE"
     }
@@ -40,12 +40,12 @@ const checkRecordStatus = async (machineData)=>{
     if(recordStatus=="active"){
         return "MACHINE ACTIVE";
     }else{
-        return "MACHINE INACTIVE";
+        throw new Error("MACHINE INACTIVE");
     }
 }
 
 const updateRecordStatusMachine = async(id_machine) =>{
-     const machineUpdated = await machinesModel.findOneAndUpdate(id_machine,{"useStatus":"true"}).exec();
+     const machineUpdated = await machinesModel.findByIdAndUpdate(id_machine,{"useStatus":"true"}).exec();
     return machineUpdated;
 }
 
@@ -57,22 +57,26 @@ const updateRecordStatusMachine = async(id_machine) =>{
 
 const checkAssignToUser = async({id_user,id_machine}) =>{
     const userSelected = await userCase.getSingleUser(id_user);
-    if(userSelected=="USER DOES NOT EXIST") return userSelected;
+    //if(userSelected=="USER DOES NOT EXIST") return userSelected;
     const userSerials =userSelected[0].serial_numbers;
     const machineSelected=await machinesModel.findById(id_machine).exec();
+    //console.log("machine Selected",machineSelected);
+    //console.log("user selected",userSelected);
+    console.log("User Selected",userSerials)
     const machineSerial = machineSelected.serial_number;
+
+    //console.log("serials",machineSerial);
     const userMachineAsign = userSerials.reduce((reduce,currentSerial,index)=>{
-        if(currentSerial==machineSerial){
-            return [...currentSerial,machineSerial];
+        if(currentSerial == machineSerial){
+            return [...reduce, currentSerial];
         }
         return reduce;
-    });
-    const finalSerial = [];
-    finalSerial.push(userMachineAsign);
-    if(finalSerial.length>0){
+        //throw new Error("MACHINE IS NOT ASSIGNED TO THE USER");
+    }, []);
+    if(userMachineAsign.length>0){
         return "MACHINE ASSIGNED TO THE USER";
     }else{
-        return "MACHINE NOT ASSIGNED TO THE USER";
+        throw new Error("MACHINE NOT ASSIGNED TO THE USER");
     }
 }
 
