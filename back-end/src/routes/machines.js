@@ -30,10 +30,9 @@ routerMachines.get('/',async(req,res)=>{
 
 routerMachines.put('/assign',async(req,res)=>{
     try {
-        
         const machineData = req.body;
-        const { s,st,m,_id} = machineData;
-        const newMachine = await machineUserCase.assignMachine(machineData,_id);
+        const { s,st,m,id_user} = machineData;
+        const newMachine = await machineUserCase.assignMachine(machineData,id_user);
         res.json({
         success:true,
         message:"New machine assigned",
@@ -127,7 +126,7 @@ routerMachines.put('/',async(req,res)=>{
         const machinePut = await machineUserCase.updateMachine(machineData);
         res.json({
             success:true,
-            message:"User Updated",
+            message:"Machine Updated",
             payload:{
                 machinePut
             }
