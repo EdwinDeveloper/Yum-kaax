@@ -6,14 +6,14 @@ post-----------localhost:8080/auth/login-------------------------
     "password":"vamos123"
 }
 
-post--------localhost:8080/auth/signin---------------------------
+post--------localhost:8080/auth/signup---------------------------
 {
 				"name": "test",
                 "lastName": "test",
                 "email": "test@outlook.com11",
                 "userName": "test11",
                 "password":"datoextra",
-                "serial_number":"AAzZZAZZZZ", //of the machine 
+                "serial_number":"UIEURIURITUR", //of the machine 
                 "model":"H86173" //of the machine
 }
 ************************************************************* */

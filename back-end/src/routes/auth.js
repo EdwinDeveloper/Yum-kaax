@@ -29,7 +29,7 @@ routerAuth.post('/login',async(req,res)=>{
     }
 });
 
-routerAuth.post('/signin',async(req,res)=>{
+routerAuth.post('/signup',async(req,res)=>{
     try {
         const dataNewUser = req.body;
         const userSigned = await useCaseAuth.signUp(dataNewUser);
@@ -42,9 +42,11 @@ routerAuth.post('/signin',async(req,res)=>{
             }
         });
     } catch (error) {
+        console.warn("Error : ",error);
         res.status(401);
         res.json({
             success:false,
+            error: error.message,
             message:"There is a problem width the users informacion or the machine"
         });
     }

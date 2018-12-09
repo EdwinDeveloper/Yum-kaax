@@ -12,10 +12,10 @@ const validateUserExist = async (dataUser)=>{
          userEmailExist = await usersModel.find({email}).exec();
          if(phoneNumber != ""){
             userPhoneExist = await usersModel.find({phoneNumber}).exec();
-            if(userPhoneExist.length>0) return "PHONE EXIST";
+            if(userPhoneExist.length>0) throw new Error("PHONE EXIST");
          }
-         if(userUserNameExist.length>0) return "USERNAME EXIST";
-         if(userEmailExist.length>0) return "EMAIL EXIST";
+         if(userUserNameExist.length>0) throw new Error("USERNAME EXIST");
+         if(userEmailExist.length>0) throw new Error("EMAIL EXIST");
     }
     return false
 }
@@ -29,7 +29,7 @@ async function getAllUsers() {
 const getSingleUser = async(idUser) =>{
     const singleUser = await usersModel.find({"_id":idUser}).exec();
     if(singleUser.length>0) return singleUser;
-    return "USER DOES NOT EXIST";
+    throw new Error("USER DOES NOT EXIST");
 }
 
 const createUser = async (userData) =>{

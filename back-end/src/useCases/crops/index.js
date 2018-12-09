@@ -25,14 +25,14 @@ const newCrop = async (cropData)=>{
 }
 
 const findCrops = async(IdUser)=>{
-    console.log("menos nivel",IdUser);
+    //console.log("menos nivel",IdUser);
     const cropsFinded = await cropsModel.find({"id_user":IdUser.id_user}).exec();
-    console.log("primer nivel",cropsFinded);
+    //console.log("primer nivel",cropsFinded);
     return cropsFinded;
 }
 const verifyCropsStatus = async(userId)=>{
      const cropsUser = await findCrops(userId);
-     console.log("segundo nivel",cropsUser);
+     //console.log("segundo nivel",cropsUser);
       const activeCrops = cropsUser.map((currentCrop,index)=>{
          if(cropsUser[index].cropStatus=="active"){
              return "activeCrop";
@@ -45,7 +45,7 @@ const verifyCropsStatus = async(userId)=>{
 
 const checkActivateCropStatus = async(userId) =>{
     const verifyCrop = await verifyCropsStatus(userId);
-    console.log("tercer nivel",verifyCrop);
+    //console.log("tercer nivel",verifyCrop);
     if(verifyCrop.length>0){
         const activeCrop =verifyCrop.reduce((reducer,current,index)=>{
             if(current=="activeCrop"){
@@ -60,19 +60,19 @@ const checkActivateCropStatus = async(userId) =>{
 const CreateAssignCrop= async (dataCrop) =>{
     const {plantAmount,cropTime,date,cropStatus,id_user,id_plant,id_machine} = dataCrop;
     const getPlant = await useCasePlant.getSinglePlants(id_plant);
-    if(getPlant=="PLANT DOES NOT EXIST") return getPlant;
+    //if(getPlant=="PLANT DOES NOT EXIST") return getPlant;
     const machineSelected= await useCasesMachine.findMachine(id_machine);
-    if(machineSelected=="MACHINES DOES NOT EXIST") return machineSelected;
+    //if(machineSelected=="MACHINES DOES NOT EXIST") return machineSelected;
     const recordStatus = await useCasesMachine.checkRecordStatus(machineSelected);
-    if(recordStatus=="MACHINE INACTIVE") return recordStatus;
+    //if(recordStatus=="MACHINE INACTIVE") return recordStatus;
     const assignedToUser = await useCasesMachine.checkAssignToUser({id_user,id_machine});
-    if(assignedToUser=="USER DOES NOT EXIST") return assignedToUser;
-    if(assignedToUser=="MACHINE NOT ASSIGNED TO THE USER") return assignedToUser;
+    //if(assignedToUser=="USER DOES NOT EXIST") return assignedToUser;
+    //if(assignedToUser=="MACHINE NOT ASSIGNED TO THE USER") return assignedToUser;
     const machineUseStatus = await useCasesMachine.checkuseStatusMachine(machineSelected);
-    if(machineUseStatus=="MACHINE IN USE") return machineUseStatus;
+    //if(machineUseStatus=="MACHINE IN USE") return machineUseStatus;
     const checkActiveCrop = await checkActivateCropStatus({"id_user":id_user});
     if(checkActiveCrop=="CROP ACTIVE") return "CROP ACTIVE";
-    console.log(checkActiveCrop);
+    throw new Error("Pausa");
     if((assignedToUser=="MACHINE ASSIGNED TO THE USER") && (machineUseStatus=="MACHINE IS NOT IN USE") && (getPlant=="PLANT EXIST") && (recordStatus=="MACHINE ACTIVE")){
         //console.log("DENTRO",assignedToUser," :::  ",machineUseStatus,"  ::  ",getPlant,"  :::  ",recordStatus);
         const machineUpdate = await useCasesMachine.updateRecordStatusMachine(id_machine);
