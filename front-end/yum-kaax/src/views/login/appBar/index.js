@@ -5,116 +5,120 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 
 const styles = theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        color: 'white',
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    color: 'white',
   },
   textField: {
-        color: 'white !important',
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        width: '200',
+    color: 'white !important',
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: '200',
 
+  },
+  a:{
+    textDecoration:'none',
   },
   containerHeader: {
-        display: 'flex',
-        padding: '0 8px',
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: '16px',
-        color: 'white !important',
-        fontWeight: 'none',
+    display: 'flex',
+    padding: '0 8px',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: '16px',
+    color: 'white !important',
+    fontWeight: 'none',
   },
   btnLogin: {
-        height: '20px',
-        color: 'white',
-        fontWeight: 'bold',
-        backgroundColor: 'rgba(169, 93, 44, 1)',
-        marginTop: '24px',
-        '&:hover': {
-            backgroundColor: 'rgba(163, 80, 44, 1)',
-      },
-},
-cssLabel: {
-  color: 'white',
-},
+    height: '20px',
+    color: 'white',
+    fontWeight: 'bold',
+    backgroundColor: 'rgba(169, 93, 44, 1)',
+    marginTop: '24px',
+    '&:hover': {
+      backgroundColor: 'rgba(163, 80, 44, 1)',
+    },
+  },
+  cssLabel: {
+    color: 'white',
+  },
 
-dense: {
-  marginTop: 19,
-},
-menu: {
-  width: 200,
-},
+  dense: {
+    marginTop: 19,
+  },
+  menu: {
+    width: 200,
+  },
 });
 
 class AppBarTop extends React.Component {
-    constructor(props){
-        super(props);
-        this.state={
-            email:'',
-            password:''
-      }
-      this.handleSubmit = this.handleSubmit.bind(this);
-      this.handleChangeInput = this.handleChangeInput.bind(this);
-}
+  constructor(props){
+    super(props);
+    this.state={
+      email:'',
+      password:''
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChangeInput = this.handleChangeInput.bind(this);
+  }
 
-handleChange = name => event => {
-  this.setState({
+  handleChange = name => event => {
+    this.setState({
       [name]: event.target.value,
-});
-};
+    });
+  };
 
-handleSubmit(e){
-  e.preventDefault();
-  fetch('192.168.1.66:8080/auth/login',{
+  handleSubmit(e){
+    e.preventDefault();
+    fetch('192.168.1.66:8080/auth/login',{
       method:'POST',
       mode:'cors',
       headers:{
-          'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-          'email':this.state.email,'password':this.state.password
-    })
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'email':this.state.email,'password':this.state.password
+      })
 
-}).then(res=>res.json())
-  .then(json=> {
+    }).then(res=>res.json())
+    .then(json=> {
       console.log(json);
       let {success} = json;
       if(success === false){
-          this.setState({
-              error:true
+        this.setState({
+          error:true
         });
-    }else if(success){
-          let token = json.payload.token;
-          localStorage.setItem('token',token);
+      }else if(success){
+        let token = json.payload.token;
+        localStorage.setItem('token',token);
 
-    }
+      }
 
+      this.setState({
+        email:'',
+        password:''
+      });
+    })
+  };
+
+  handleChangeInput(event){
+    let t=event.target;
+    let v=t.value;
+    let n= t.name;
     this.setState({
-          email:'',
-          password:''
-    });
-})
-};
-
-handleChangeInput(event){
-  let t=event.target;
-  let v=t.value;
-  let n= t.name;
-  this.setState({
       [n]:v
-});
-  console.log(n,v);
-}
-render() {
-  const { classes } = this.props;
+    });
+    console.log(n,v);
+  }
+  render() {
+    const { classes } = this.props;
 
-  return (
+    return (
       <div className="React">
       <AppBar className={classes.containerHeader}>
       <h1 className="brand-name">YUM-KAAX</h1>
@@ -127,30 +131,31 @@ render() {
       margin="dense"
       onChange={ this.handleChangeInput}
       classes={{
-          root: classes.cssLabel,
-    }}
+        root: classes.cssLabel,
+      }}
 
-    />
-    <TextField
-    id="standard-password-input"
-    label="Contraseña"
-    name="password"
-    className={classes.textField}
-    type="password"
-    onChange={ this.handleChangeInput}
-    autoComplete="current-password"
-    margin="normal"
-    />
-    <Button type="submit" className={classes.btnLogin}>Iniciar sesión</Button>
-    </form>
-    </AppBar>
-    </div>
-    );
-}
+      />
+      <TextField
+      id="standard-password-input"
+      label="Contraseña"
+      name="password"
+      className={classes.textField}
+      type="password"
+      onChange={ this.handleChangeInput}
+      autoComplete="current-password"
+      margin="normal"
+      />
+      <Link to="/main" className={classes.a}><Button type="submit" className={classes.btnLogin}>Iniciar sesión</Button></Link>
+
+      </form>
+      </AppBar>
+      </div>
+      );
+  }
 }
 
 AppBarTop.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(AppBarTop);

@@ -6,6 +6,7 @@ import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import WallpaperIcon from '@material-ui/icons/Wallpaper';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 export const mainListItems = (
   <div>
@@ -27,13 +28,15 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Crear cultivos" />
     </ListItem>
-    <ListItem button>
+
+
+ <Link to="/login"  style={{ textDecoration: 'none' }}><ListItem button>
       <ListItemIcon>
         <ExitToAppIcon />
       </ListItemIcon>
       <ListItemText primary="Cerrar sesión" />
     </ListItem>
-
+</Link>
   </div>
 );
 
