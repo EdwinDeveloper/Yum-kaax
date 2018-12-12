@@ -15,6 +15,10 @@ import { mainListItems } from './listItems';
 import './MainDashboard.css';
 import LetterAvatars from './AvatarMainDashboard';
 import Typography from '@material-ui/core/Typography';
+import Dashboard from '../dashboard';
+import AddCrops from '../addCrops';
+import MonthlyReport from '../monthlyReport';
+import Simulation from '../simulation';
 
 const drawerWidth = 240;
 
@@ -168,16 +172,21 @@ class MainDashboard extends Component {
 
 <main className={classes.content}>
 <div className={classes.appBarSpacer} />
-<Typography variant="h4" gutterBottom component="h2">
-Orders
-</Typography>
-<Typography component="div" className={classes.chartContainer}>
-</Typography>
-<Typography variant="h4" gutterBottom component="h2">
-Products
-</Typography>
-<div className={classes.tableContainer}>
-</div>
+<Dashboard/>
+<AddCrops/>
+<MonthlyReport/>
+<Simulation/>
+
+
+
+
+
+
+
+
+
+
+
 </main>
 
 {/*----------------------------Termina contenedor main central--------------------------------------*/}
