@@ -4,6 +4,7 @@ const userUseCases = require('../../useCases/users');
 const machineUseCaes = require('../../useCases/machines');
 
 const signUp = async (dataNewUser)=>{
+    console.log(dataNewUser);
     const { name , lastName , email , userName , password , serial_number , model }=dataNewUser;
    const existUserData = await userUseCases.validateUserExist(dataNewUser)
    if(existUserData=="PHONE EXIST") throw new Error(existUserData);
