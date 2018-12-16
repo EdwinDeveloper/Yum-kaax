@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FilledInput from '@material-ui/core/FilledInput';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import CardComponent from '../MainDashboard/cardComponent';
-import AddDosificadorDialogComponent from '../MainDashboard/AddDosificadorDialogComponent';
+import CardComponent from '../TemplateDashboardView/cardComponent';
 import AddCropButtonComponent from '../../Components/AddCropButtonComponent';
-import SelectDosificadorComponent from '../../Components/SelectDosificadorComponent';
-import ChartTimeLineInProcess from '../../Components/ChartTimeLineInProcess';
-import PieChartStory from '../../Components/PieChartStory';
+import ChartTimeLineInProcessComponent from '../../Components/ChartTimeLineInProcessComponent';
+import PieChartStoryComponent from '../../Components/PieChartStoryComponent';
+import { Route, BrowserRouter as Router, NavLink} from 'react-router-dom';
+
 
 const styles = theme => ({
   root: {
@@ -39,16 +35,6 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit,
   },
-  containerCardHeader:{
-    display:'flex',
-    JustifyContent:'space-evenly',
-    padding: '0 8px',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginBottom: '16px',
-    color: 'white !important',
-    fontWeight: 'none',
-  },
   addButton:{
     position: 'absolute',
     bottom: theme.spacing.unit * 2,
@@ -63,14 +49,10 @@ class Dashboard extends Component {
 
     return (
       <div>
-      <div className={classes.containerCardHeader}>
-      <SelectDosificadorComponent/>
-      <AddDosificadorDialogComponent/>
-      </div>
 
       <div className={classes.containerMain}>
-      <ChartTimeLineInProcess/>
-      <PieChartStory/>
+      <ChartTimeLineInProcessComponent/>
+      <PieChartStoryComponent/>
       </div>
 
       <div className={classes.containerCards}>
@@ -79,9 +61,11 @@ class Dashboard extends Component {
       <CardComponent/>
       </div>
 
+      <NavLink to="/main/AddCrops" activeClassName="selected" style={{ textDecoration: 'none' }}>
       <div className={classes.addButton}>
       <AddCropButtonComponent/>
       </div>
+      </NavLink>
       </div>
       );
   }
