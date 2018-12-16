@@ -14,7 +14,7 @@ routerAuth.post('/login',async(req,res)=>{
             success:true,
             message:"Logged successfuly",
             payload:{
-                token
+                user_info:token
             }
         });
     } catch (error) {

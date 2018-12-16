@@ -5,9 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import redirectMain from '../../MainDashboard';
-import { BrowserRouter} from "react-router-dom";
-import { browserHistory ,Link} from 'react-router-dom'
+import { BrowserRouter,Link} from "react-router-dom";
 
 const styles = theme => ({
   container: {
@@ -62,7 +60,8 @@ class AppBarTop extends React.Component {
     super(props);
     this.state={
       email:'',
-      password:''
+      password:'',
+      page:''
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeInput = this.handleChangeInput.bind(this);
@@ -89,17 +88,14 @@ class AppBarTop extends React.Component {
     }).then(res=>res.json())
     .then(json=> {
       console.log(json);
-      this.setState({
-        email:'',
-        password:''
-      });
-      const {token}=json.payload;
-      localStorage.setItem('token',token);
-      if(json.success==true){
-        //this.props.history.push('/page')
-        console.log(json);
+      if(json.message=="Logged successfuly"){
+          const {user_info}=json.payload;
+          localStorage.setItem('user_info',user_info);
+          console.log("Hola hermano");
+          this.props.history.push('/main');
+      }else if(json.success==false){
+          alert("Invalid data");
       }
-      console.log();
     })
   };
 
@@ -142,7 +138,7 @@ class AppBarTop extends React.Component {
       autoComplete="current-password"
       margin="normal"
       />
-      <Button onClick={this.handleSubmit} type="submit" className={classes.btnLogin}>Iniciar sesión</Button>
+      <Link to={this.state.page}><Button onClick={this.handleSubmit} type="submit" className={classes.btnLogin}>Iniciar sesión</Button></Link>
 
       </form>
       </AppBar>
