@@ -7,6 +7,7 @@ import TemplateDashboardView from './views/TemplateDashboardView';
 import ProgressMobileStepper from './views/mobile/loginMobile';
 import { Route, BrowserRouter, Switch} from 'react-router-dom';
 import MainLoginMobile from './views/mobile/loginMobile/mainLoginMobile';
+
 import './App.css';
 
 //Inicio del tema color lightGreen para todo el proyecto
@@ -40,6 +41,7 @@ class App extends Component {
         </Switch>
       </MuiThemeProvider>
       </BrowserRouter>
+
       );
   }
 }

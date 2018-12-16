@@ -5,8 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import { BrowserRouter as Router, Link } from "react-router-dom";
-
+import { BrowserRouter,Link} from "react-router-dom";
 
 const styles = theme => ({
   container: {
@@ -61,7 +60,8 @@ class AppBarTop extends React.Component {
     super(props);
     this.state={
       email:'',
-      password:''
+      password:'',
+      page:''
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeInput = this.handleChangeInput.bind(this);
@@ -75,7 +75,7 @@ class AppBarTop extends React.Component {
 
   handleSubmit(e){
     e.preventDefault();
-    fetch('192.168.1.66:8080/auth/login',{
+    fetch('http://localhost:8080/auth/login',{
       method:'POST',
       mode:'cors',
       headers:{
@@ -88,21 +88,14 @@ class AppBarTop extends React.Component {
     }).then(res=>res.json())
     .then(json=> {
       console.log(json);
-      let {success} = json;
-      if(success === false){
-        this.setState({
-          error:true
-        });
-      }else if(success){
-        let token = json.payload.token;
-        localStorage.setItem('token',token);
-
+      if(json.message=="Logged successfuly"){
+          const {user_info}=json.payload;
+          localStorage.setItem('user_info',user_info);
+          console.log("Hola hermano");
+          this.props.history.push('/main');
+      }else if(json.success==false){
+          alert("Invalid data");
       }
-
-      this.setState({
-        email:'',
-        password:''
-      });
     })
   };
 
@@ -145,7 +138,7 @@ class AppBarTop extends React.Component {
       autoComplete="current-password"
       margin="normal"
       />
-      <Link to="/main" className={classes.a}><Button type="submit" className={classes.btnLogin}>Iniciar sesión</Button></Link>
+      <Link to={this.state.page}><Button onClick={this.handleSubmit} type="submit" className={classes.btnLogin}>Iniciar sesión</Button></Link>
 
       </form>
       </AppBar>

@@ -90,7 +90,12 @@ const loginUser = async (email , password)=>{
     //console.log(isValidPassword);
     if(!isValidPassword) throw new Error('Invalid Password');
 
-    return jwt.create({id:userExist._id});
+    const token = await jwt.create({id:userExist._id});
+    const userData = {
+        id_User:userExist._id,
+        token
+    }
+    return userData;
 }
 
 module.exports = {
