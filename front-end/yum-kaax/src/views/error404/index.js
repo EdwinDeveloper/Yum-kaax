@@ -97,7 +97,9 @@ class error404 extends Component {
       <img alt="Remy Sharp" src={logo} className={classes.bigAvatar2} />
       </div>
       <Typography component="h5" variant="h5"  className={classes.txtReturn} >
-      <Link to="/login" className={classes.a}> <Fab color="secondary" aria-label="KeyboardReturnIcon" className={classes.fab}>
+      <Link to="/login" className={classes.a}>
+
+      <Fab color="secondary" aria-label="KeyboardReturnIcon" className={classes.fab}>
       <KeyboardReturnIcon />
       </Fab>
       </Link>

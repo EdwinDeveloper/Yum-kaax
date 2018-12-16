@@ -11,6 +11,20 @@ import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import logo from '../../../assets/img/background/login.png';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import IconButton from '@material-ui/core/IconButton';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Fade from '@material-ui/core/Fade';
+import { Redirect } from 'react-router-dom';
+
+
+
+
 
 const styles = theme => ({
   container: {
@@ -66,6 +80,7 @@ const styles = theme => ({
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
+
   btnLogin: {
     color: 'white',
     height: '37px',
@@ -73,40 +88,73 @@ const styles = theme => ({
     margin: '24px auto',
     display: 'flex',
     fontWeight: 'bold',
-    backgroundColor: 'rgba(169, 93, 44, 1)',
-    '&:hover': {
-      backgroundColor: 'rgba(163, 80, 44, 1)',
-    },
+    backgroundColor: 'rgba(185, 100, 49, 0.9)',
+
   },
 
 });
 
-
 function getSteps() {
   return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
 }
+
 class SliderExampleControlled extends Component {
+  constructor(props){
+    super(props);
 
-  state = {
-    activeStep: 0,
-    name: '',
-    email: '',
-    user: '',
-    pw: '',
-    confirmPw: '',
-    modelDosificador: '',
-    nsDosificador: '',
+    this.state = {
+     loading: false,
+     query: 'idle',
+     activeStep: 0,
+     name: '',
+     email: '',
+     user: '',
+     pw: '',
+     passwordConfirm: '',
+     modelDosificador: '',
+     nsDosificador: '',
+     showPassword: false,
+     showPasswordConfirm: false,
+     redirect: false,
 
-  };
+   };
+ }
 
-  totalSteps = () => {
-    return getSteps().length;
-  };
 
-  handleNext = () => {
-    let activeStep;
+ totalSteps = () => {
+  return getSteps().length;
+};
+handleClickShowPasswordConfirm = () => {
+  this.setState(state => ({ showPasswordConfirm: !state.showPasswordConfirm }));
+};
 
-    if (this.isLastStep() && !this.allStepsCompleted()) {
+handleClickShowPassword = () => {
+  this.setState(state => ({ showPassword: !state.showPassword }));
+};
+
+handleChangeConfirmPassword = prop => event => {
+  this.setState({ passwordConfirm: event.target.value });
+};
+
+handleChangePassword = prop => event => {
+  this.setState({ password: event.target.value });
+};
+setRedirect = () => {
+  this.setState({
+    redirect: true
+  })
+}
+
+renderRedirect = () => {
+  if (this.state.redirect) {
+    return <Redirect to='/mainMobile' />
+  }
+}
+
+handleNext = () => {
+  let activeStep;
+
+  if (this.isLastStep() && !this.allStepsCompleted()) {
       // It's the last step, but not all steps have been completed,
       // find the first step that has been completed
       const steps = getSteps();
@@ -128,6 +176,7 @@ class SliderExampleControlled extends Component {
 
   getStepContent(stepIndex) {
     const { classes } = this.props;
+    const { loading, query } = this.state;
 
     switch (stepIndex) {
       case 0:
@@ -166,6 +215,7 @@ class SliderExampleControlled extends Component {
         <Typography component="h5" variant="h5" color="inherit"  className={classes.subTitle} >
         Ingresa tu usuario y contraseña
         </Typography>
+
         <TextField
         id="standard-dense"
         label="Usuario"
@@ -174,22 +224,46 @@ class SliderExampleControlled extends Component {
         onChange={this.handleChange('user')}
         margin="dense"
         />
-        <TextField
-        id="standard-dense"
-        label="Contraseña"
-        className={classNames(classes.textField, classes.formControl)}
-        value={this.state.pw}
-        onChange={this.handleChange('pw')}
-        margin="dense"
+
+        <FormControl className={classes.formControl}>
+        <InputLabel htmlFor="adornment-password">Contraseña</InputLabel>
+        <Input
+        id="adornment-password"
+        type={this.state.showPassword ? 'text' : 'password'}
+        value={this.state.password}
+        onChange={this.handleChangePassword('password')}
+        endAdornment={
+          <InputAdornment position="end">
+          <IconButton
+          aria-label="Toggle password visibility"
+          onClick={this.handleClickShowPassword}
+          >
+          {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+          </IconButton>
+          </InputAdornment>
+        }
         />
-        <TextField
-        id="standard-dense"
-        label="Confirmar Contraseña"
-        className={classNames(classes.textField, classes.formControl)}
-        margin="dense"
-        value={this.state.confirmPw}
-        onChange={this.handleChange('confirmPw')}
+        </FormControl>
+
+        <FormControl className={classes.formControl}>
+        <InputLabel htmlFor="adornment-confirm-password">Confirmar contraseña</InputLabel>
+        <Input
+        id="adornment-confirm-password"
+        type={this.state.showPasswordConfirm ? 'text' : 'password'}
+        value={this.state.passwordConfirm}
+        onChange={this.handleChangeConfirmPassword('passwordConfirm')}
+        endAdornment={
+          <InputAdornment position="end">
+          <IconButton
+          aria-label="Toggle password visibility"
+          onClick={this.handleClickShowPasswordConfirm}
+          >
+          {this.state.showPasswordConfirm ? <Visibility /> : <VisibilityOff />}
+          </IconButton>
+          </InputAdornment>
+        }
         />
+        </FormControl>
         </div>
         );
 
@@ -229,8 +303,33 @@ class SliderExampleControlled extends Component {
         <Typography component="h5" variant="h5" color="inherit"  className={classes.subTitle} >
         En breve, se redireccionará la pagina para su ingreso
         </Typography>
-        </div>
-        );
+
+
+
+
+
+
+
+        <div className={classes.root}>
+        <div className={classes.placeholder}>
+        {query === 'success' ? (
+          <Typography>Success!</Typography>
+          ) : (
+          <Fade
+          in={query === 'progress'}
+          style={{
+            transitionDelay: query === 'progress' ? '800ms' : '0ms',
+          }}
+          unmountOnExit
+          >
+          <CircularProgress />
+          </Fade>
+          )}
+          </div>
+
+          </div>
+          </div>
+          );
     }
   }
 
@@ -253,8 +352,48 @@ class SliderExampleControlled extends Component {
   };
 
 
+
+
+
+
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
+  handleClickLoading = () => {
+    this.setState(state => ({
+      loading: !state.loading,
+    }));
+  };
+
+  handleClickQuery = () => {
+    clearTimeout(this.timer);
+
+    if (this.state.query !== 'idle') {
+      this.setState({
+        query: 'idle',
+        redirect: false,
+      });
+      return;
+    }
+
+    this.setState({
+      query: 'progress',
+      redirect: false,
+    });
+    this.timer = setTimeout(() => {
+      this.setState({
+        query: 'success',
+        redirect: false,
+      });
+    }, 2e3);
+  };
+
+
   render() {
     const { classes, theme } = this.props;
+    const { loading, query, redirect } = this.state;
     return (
       <div>
       <AppBar className={classes.containerHeader}>
@@ -267,7 +406,7 @@ class SliderExampleControlled extends Component {
       activeStep={this.state.activeStep}
       className={classes.root}
       nextButton={
-        <Button size="small" onClick={this.handleNext} disabled={this.state.activeStep === 3}>
+        <Button size="small" onClick={this.handleNext}disabled={this.state.activeStep === 3}>
         {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
         </Button>
       }
@@ -279,7 +418,7 @@ class SliderExampleControlled extends Component {
       />
       {this.getStepContent(this.state.activeStep)}
 
-      <Button className={classes.btnLogin} size="small" onClick={this.handleNext} disabled={this.state.activeStep === 3}>
+      <Button className={classes.btnLogin} size="small" onClick={(event) => { this.handleNext() ; this.handleClickQuery()}} disabled={this.state.activeStep === 3}>
       Siguiente
       </Button>
       <Toolbar className={classes.toolbar}>
