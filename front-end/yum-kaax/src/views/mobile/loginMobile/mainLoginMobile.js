@@ -84,29 +84,26 @@ const styles = theme => ({
     margin: '24px auto',
     display: 'flex',
     fontWeight: 'bold',
-    backgroundColor: 'rgba(169, 93, 44, 1)',
-    '&:hover': {
-      backgroundColor: 'rgba(163, 80, 44, 1)',
-    },
+    backgroundColor: 'rgba(185, 100, 49, 0.9)',
+
   },
 
   btnRegistrer: {
     color: 'white',
     height: '37px',
-    width: '50%',
     margin: '24px auto',
     display: 'flex',
     fontWeight: 'bold',
-    backgroundColor: 'rgba(151, 188, 88, 1)',
-    '&:hover': {
-      backgroundColor: 'rgba(151, 188, 88, 1)',
-    },
+    backgroundColor: 'rgba(185, 100, 49, 0.9)',
+
   },
   divider: {
     backgroundColor: '#979797',
     width: '45%',
   },
-
+  a:{
+    textDecoration:'none',
+  },
   dividerText: {
     display: 'flex',
     alignItems: 'center',
@@ -164,7 +161,7 @@ class MainLoginMobile extends Component {
     </Typography>
     <Divider className={classes.divider} />
     </div>
-    <Button type="submit" className={classes.btnRegistrer}>Crear tu cuenta</Button>
+      <Link to="/mobile" className={classes.a}> <Button type="submit" className={classes.btnRegistrer}>Crear tu cuenta</Button></Link>
     <Typography component="h5" variant="h5" color="inherit"  className={classes.subTitle} >
 
       <Link to="/login"><a href="#">¿Olvidaste tu contraseña?</a></Link>

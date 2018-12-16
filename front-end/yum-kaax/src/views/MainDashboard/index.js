@@ -11,7 +11,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems } from './listItems';
+import MainListItems from './listItems';
 import './MainDashboard.css';
 import LetterAvatars from './AvatarMainDashboard';
 import Typography from '@material-ui/core/Typography';
@@ -19,10 +19,10 @@ import Dashboard from '../dashboard';
 import AddCrops from '../addCrops';
 import MonthlyReport from '../monthlyReport';
 import Simulation from '../simulation';
+import Grid from '@material-ui/core/Grid';
+import { Route, BrowserRouter as Router, Switch} from 'react-router-dom';
 
 const drawerWidth = 240;
-
-
 
 const styles = theme => ({
 	root: {
@@ -108,6 +108,16 @@ tableContainer: {
 h5: {
 	marginBottom: theme.spacing.unit * 2,
 },
+
+root2: {
+	padding: theme.spacing.unit,
+	[theme.breakpoints.down('sm')]: {
+		backgroundColor: theme.palette.secondary.main,
+	},
+	[theme.breakpoints.up('md')]: {
+		backgroundColor: theme.palette.primary.main,
+	},
+},
 });
 
 class MainDashboard extends Component {
@@ -127,6 +137,9 @@ class MainDashboard extends Component {
 		const { classes } = this.props;
 
 		return (
+
+			<Router>
+
 			<div className={classes.root}>
 			<CssBaseline />
 
@@ -146,9 +159,6 @@ class MainDashboard extends Component {
 		</AppBar>
 
 
-
-
-
 	{/*----------------------------Inicio contenedor navBar avatar--------------------------------------*/}
 
 	<Drawer variant="permanent" classes={{ paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),}}open={this.state.open} >
@@ -162,9 +172,8 @@ class MainDashboard extends Component {
 	</Typography>
 	</div>
 	<Divider />
-	<List>{mainListItems}</List>
+	<List><MainListItems/></List>
 	</Drawer>
-
 {/*----------------------------Termina contenedor navBar avatar--------------------------------------*/}
 
 
@@ -172,27 +181,14 @@ class MainDashboard extends Component {
 
 <main className={classes.content}>
 <div className={classes.appBarSpacer} />
-<Dashboard/>
-<AddCrops/>
-<MonthlyReport/>
-<Simulation/>
-
-
-
-
-
-
-
-
-
-
-
+<Route path="/main" exact component={Dashboard}/>
+<Route path="/main/AddCrops" exact component={AddCrops}/>
+<Route path="/main/MonthlyReport"  exact component={MonthlyReport}/>
+<Route path="/main/Simulation"  exact component={Simulation}/>
 </main>
-
 {/*----------------------------Termina contenedor main central--------------------------------------*/}
-
-
 </div>
+</Router>
 );
 	}
 }

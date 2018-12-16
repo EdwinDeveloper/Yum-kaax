@@ -6,7 +6,7 @@ import error404 from './views/error404';
 import MainDashboard from './views/MainDashboard';
 import ProgressMobileStepper from './views/mobile/loginMobile';
 import { Route, BrowserRouter, Switch} from 'react-router-dom';
-import MainLoginMobile from './views/mobile/loginMobile/mainLoginMobile'
+import MainLoginMobile from './views/mobile/loginMobile/mainLoginMobile';
 import './App.css';
 
 //Inicio del tema color lightGreen para todo el proyecto
@@ -32,14 +32,11 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <Switch>
         <Route path="/" exact component={LoginRegisterComponent}/>
-        <Route path="/login" exact component={LoginRegisterComponent}/>
-        <Route path="/main" exact component={MainDashboard}/>
+        <Route path="/login" exact  component={LoginRegisterComponent}/>
+        <Route path="/main"  component={MainDashboard}/>
         <Route path="/mobile" exact component={ProgressMobileStepper}/>
         <Route path="/mainMobile" exact component={MainLoginMobile}/>
         <Route path="/*" exact component={error404}/>
-
-
-
         </Switch>
       </MuiThemeProvider>
       </BrowserRouter>

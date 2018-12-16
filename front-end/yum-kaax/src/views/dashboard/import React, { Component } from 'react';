@@ -1,0 +1,81 @@
+import React, { Component } from 'react';
+
+class ChartTimeLineInProcess extends Component {
+  render(){
+return(
+
+      <BarChart width={600} height={300} data={data}
+      margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+      <CartesianGrid strokeDasharray="3 3"/>
+      <XAxis dataKey="name"/>
+      <YAxis tickFormatter={toPercent}/>
+      <Tooltip/>
+      <Legend verticalAlign="top" wrapperStyle={{lineHeight: '40px'}}/>
+      <ReferenceLine y={0} stroke='#fff'/>
+      <Brush dataKey='name'  height={25} stroke="#8884d8"/>
+      <Bar dataKey="Actual" stackId="a" fill="#8bc34a" />
+      <Bar dataKey="Faltante" stackId="a" fill="#D0AA02" />
+      </BarChart>
+
+      <PieChart width={300} height={250} onMouseEnter={this.onPieEnter}>
+      <Pie
+      data={data2}
+      cx={170}
+      cy={130}
+      innerRadius={80}
+      outerRadius={100}
+      fill="#8884d8"
+      paddingAngle={5}
+      >
+      {
+        data2.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
+      }
+      </Pie>
+      </PieChart>
+
+)
+
+  }
+  }import React, { Component } from 'react';
+
+  class ChartTimeLineInProcess extends Component {
+  render(){
+  return(
+
+
+
+  <BarChart width={600} height={300} data={data}
+  margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+  <CartesianGrid strokeDasharray="3 3"/>
+  <XAxis dataKey="name"/>
+  <YAxis tickFormatter={toPercent}/>
+  <Tooltip/>
+  <Legend verticalAlign="top" wrapperStyle={{lineHeight: '40px'}}/>
+  <ReferenceLine y={0} stroke='#fff'/>
+  <Brush dataKey='name'  height={25} stroke="#8884d8"/>
+  <Bar dataKey="Actual" stackId="a" fill="#8bc34a" />
+  <Bar dataKey="Faltante" stackId="a" fill="#D0AA02" />
+  </BarChart>
+
+  <PieChart width={300} height={250} onMouseEnter={this.onPieEnter}>
+  <Pie
+  data={data2}
+  cx={170}
+  cy={130}
+  innerRadius={80}
+  outerRadius={100}
+  fill="#8884d8"
+  paddingAngle={5}
+  >
+  {
+  data2.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
+  }
+  </Pie>
+  </PieChart>
+
+  )
+
+  }
+  }
+
+  export default withStyles(styles)(ChartTimeLineInProcess);
