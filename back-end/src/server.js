@@ -6,11 +6,11 @@ const  routerCrops  = require('./routes/crops').routerCrops;
 const { routerPlants } = require('./routes/plants');
 const routerMachines = require('./routes/machines').routerMachines;
 const routerAuth = require('./routes/auth').routerAuth;
+const cors=require('cors');
 /*Asignamos el valor del metodo de express en una variable (app)*/
 console.log(routerPlants.route);
-
 app.use(express.json());
-
+app.use(cors());
 app.use('/auth',routerAuth);
 app.use('/users',routerUsers);
 app.use('/crops',routerCrops);

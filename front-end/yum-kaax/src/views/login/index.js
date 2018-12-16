@@ -9,7 +9,7 @@ class LoginRegisterComponent extends Component {
     return (
       <div className="React">
 {/*Declaracion de componentes que conforman los campos del login y el registro de usuario por su tag o selector*/}
-      <AppBarTop/>
+      <AppBarTop history={this.props.history}/>
       <FormRegister/>
       <BottomAppBar/>
       </div>
