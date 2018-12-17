@@ -90,8 +90,12 @@ class AppBarTop extends React.Component {
       console.log(json);
       if(json.message=="Logged successfuly"){
           const {user_info}=json.payload;
-          localStorage.setItem('user_info',user_info);
-          console.log("Hola hermano");
+          // console.log(user_info.id_User);
+          // console.log(user_info.token);
+          // console.log(user_info.userName);
+          localStorage.setItem('id_User',user_info.id_User);
+          localStorage.setItem('token',user_info.token);
+          localStorage.setItem('userName',user_info.userName);
           this.props.history.push('/main');
       }else if(json.success==false){
           alert("Invalid data");
