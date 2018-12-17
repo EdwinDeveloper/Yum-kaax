@@ -7,7 +7,6 @@ import ChartTimeLineInProcessComponent from '../../Components/ChartTimeLineInPro
 import PieChartStoryComponent from '../../Components/PieChartStoryComponent';
 import { Route, BrowserRouter as Router, NavLink} from 'react-router-dom';
 
-
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -44,9 +43,12 @@ const styles = theme => ({
 
 class Dashboard extends Component {
 
+  constructor(props){
+      super(props);
+  }
   render() {
-    const { classes } = this.props;
-
+    const { classes , crops } = this.props;
+    console.log("data-crops",crops);
     return (
       <div>
 
@@ -56,8 +58,6 @@ class Dashboard extends Component {
       </div>
 
       <div className={classes.containerCards}>
-      <CardComponent/>
-      <CardComponent/>
       <CardComponent/>
       </div>
 

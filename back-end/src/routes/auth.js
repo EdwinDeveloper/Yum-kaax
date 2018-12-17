@@ -9,12 +9,12 @@ routerAuth.post('/login',async(req,res)=>{
     try {
         const { email , password } = req.body;
         console.log(email,password);
-        const token = await useCaseUsers.loginUser(email,password);
+        const user_info = await useCaseUsers.loginUser(email,password);
         res.json({
             success:true,
             message:"Logged successfuly",
             payload:{
-                user_info:token
+                user_info
             }
         });
     } catch (error) {
