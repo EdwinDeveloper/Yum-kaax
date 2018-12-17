@@ -3,12 +3,12 @@ const mongoose = require('mongoose')
 
 //Declaramos una funcion que nos retorna una promesa
 const connect = () =>  new Promise((resolve, reject) => {
-    /*Utilizamos el metodo de mongoose connect y le pasamos 
+    /*Utilizamos el metodo de mongoose connect y le pasamos
     nuestra ruta de la base de datos*/
     mongoose.connect('mongodb://localhost/Yumkaax', {
       /*Le asignamos a la variable useNewUrlParser el valor de tru
       para evitar error por default en consola*/
-      useNewUrlParser: true 
+      useNewUrlParser: true
     })
     /*Asignamos mongoose.conection a la constante db*/
     const db = mongoose.connection
@@ -35,4 +35,4 @@ const connect = () =>  new Promise((resolve, reject) => {
   /*Exportamos la funcion connect */
 module.exports = {
   connect
-} 
+}

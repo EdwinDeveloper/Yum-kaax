@@ -1,50 +1,39 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import MobileStepper from '@material-ui/core/MobileStepper';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import ImgCrop from '../../assets/img/background/nulleight.png';
+import classNames from 'classnames';
+import TextField from '@material-ui/core/TextField';
+import { BrowserRouter, Link} from "react-router-dom";
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
-const tutorialSteps = [
-  {
-    label: 'San Francisco – Oakland Bay Bridge, United States',
-    imgPath:
-      '../assets/img/background/login.png',
-  },
-  {
-    label: 'Bird',
-    imgPath:
-      'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-  {
-    label: 'Bali, Indonesia',
-    imgPath:
-      'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80',
-  },
-  {
-    label: 'NeONBRAND Digital Marketing, Las Vegas, United States',
-    imgPath:
-      'https://images.unsplash.com/photo-1518732714860-b62714ce0c59?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-  {
-    label: 'Goč, Serbia',
-    imgPath:
-      'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-];
 
 const styles = theme => ({
   root: {
     maxWidth: 400,
     flexGrow: 1,
   },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+
+  containerCenter: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+
+
   header: {
     display: 'flex',
     alignItems: 'center',
-    height: 50,
+    height: 100,
     paddingLeft: theme.spacing.unit * 4,
     backgroundColor: theme.palette.background.default,
   },
@@ -55,66 +44,140 @@ const styles = theme => ({
     display: 'block',
     width: '100%',
   },
+  btnLogin: {
+    height: '20px',
+    color: 'white',
+    fontWeight: 'bold',
+    backgroundColor: 'rgba(169, 93, 44, 1)',
+    marginTop: '24px',
+
+  },
+  containerMain: {
+    display: 'flex',
+    padding: '0 8px',
+    justifyContent: 'space-around',
+  },
+  containerGeneral:{
+    display: 'flex',
+    padding: '0 8px',
+    flexDirection: 'column',
+  },
+  dense: {
+   marginLeft: '8px',
+ },
+   selectEmpty: {
+    marginTop: theme.spacing.unit * 2,
+  },
+    formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 120,
+  },
 });
 
-class AddCrops extends React.Component {
+class AddCrops extends Component {
+
   state = {
-    activeStep: 0,
+    age: '',
+    name: 'hai',
+    labelWidth: 0,
   };
 
-  handleNext = () => {
-    this.setState(prevState => ({
-      activeStep: prevState.activeStep + 1,
-    }));
-  };
-
-  handleBack = () => {
-    this.setState(prevState => ({
-      activeStep: prevState.activeStep - 1,
-    }));
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   render() {
-    const { classes, theme } = this.props;
-    const { activeStep } = this.state;
-    const maxSteps = tutorialSteps.length;
+    const { classes } = this.props;
 
     return (
-      <div className={classes.root}>
-        <Paper square elevation={0} className={classes.header}>
-          <Typography>{tutorialSteps[activeStep].label}</Typography>
-        </Paper>
-        <img
-          className={classes.img}
-          src={tutorialSteps[activeStep].imgPath}
-          alt={tutorialSteps[activeStep].label}
-        />
-        <MobileStepper
-          steps={maxSteps}
-          position="static"
-          activeStep={activeStep}
-          className={classes.mobileStepper}
-          nextButton={
-            <Button size="small" onClick={this.handleNext} disabled={activeStep === maxSteps - 1}>
-              Next
-              {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-            </Button>
-          }
-          backButton={
-            <Button size="small" onClick={this.handleBack} disabled={activeStep === 0}>
-              {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-              Back
-            </Button>
-          }
-        />
+
+      <div>
+      <div className={classes.containerGeneral}>
+      <div className={classes.containerMain}>
+      <img alt="Remy Sharp" src={ImgCrop} className={classes.img} />
       </div>
-    );
+
+      <div className={classes.container}>
+      <div className={classes.containerCenter}>
+
+      <FormControl className={classes.formControl}>
+      <InputLabel shrink htmlFor="age-label-placeholder">
+      Tipo de planta
+      </InputLabel>
+      <Select
+      value={this.state.age}
+      onChange={this.handleChange}
+      input={<Input name="age" id="age-label-placeholder" />}
+      displayEmpty
+      name="age"
+      className={classes.selectEmpty}
+      >
+      <MenuItem value="">Moringa</MenuItem>
+      <MenuItem value={10}>Cebolla</MenuItem>
+      <MenuItem value={20}>Cilantro</MenuItem>
+      <MenuItem value={30}>Perejil</MenuItem>
+      </Select>
+      </FormControl>
+
+
+
+
+      <FormControl className={classes.formControl}>
+      <InputLabel shrink htmlFor="age-label-placeholder">
+      Tipo de planta
+      </InputLabel>
+      <Select
+      value={this.state.age}
+      onChange={this.handleChange}
+      input={<Input name="age" id="age-label-placeholder" />}
+      displayEmpty
+      name="age"
+      className={classes.selectEmpty}
+      >
+      <MenuItem value="">2</MenuItem>
+      <MenuItem value={10}>4</MenuItem>
+      <MenuItem value={20}>6</MenuItem>
+      <MenuItem value={30}>8</MenuItem>
+
+
+      </Select>
+      </FormControl>
+
+
+
+
+
+
+
+      <FormControl className={classes.formControl}>
+      <InputLabel shrink htmlFor="age-label-placeholder">
+      Tipo de planta
+      </InputLabel>
+      <Select
+      value={this.state.age}
+      onChange={this.handleChange}
+      input={<Input name="age" id="age-label-placeholder" />}
+      displayEmpty
+      name="age"
+      className={classes.selectEmpty}
+      >
+      <MenuItem value="">Inicio</MenuItem>
+      <MenuItem value={10}>Fin</MenuItem>
+
+      </Select>
+      </FormControl>
+
+      </div>
+
+      <Link to="/main/AddCrops/CropGrowth" style={{ textDecoration: 'none' }} >
+      <Button   type="submit" className={classes.btnLogin}>Crear cultivo
+      </Button>
+      </Link>
+      </div>
+      </div>
+      </div>
+      )
   }
 }
-
-AddCrops.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles, { withTheme: true })(AddCrops);
