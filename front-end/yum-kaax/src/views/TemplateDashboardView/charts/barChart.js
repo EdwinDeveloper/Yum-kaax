@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-class BarChart extends Component {
+class BarChartCropGrowth extends Component {
 
 
   render() {
@@ -43,4 +43,4 @@ const toPercent = (decimal, fixed = 0) => {
   }
 }
 
-export default BarChart;
+export default BarChartCropGrowth;

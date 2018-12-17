@@ -12,15 +12,16 @@ import './App.css';
 
 //Inicio del tema color lightGreen para todo el proyecto
 const theme = createMuiTheme({
+    typography: {
+    useNextVariants: true,
+  },
   palette: {
     primary: lightGreen,
    secondary: {
       main: 'rgba(169, 93, 44, 1)',
     },
   },
-  typography: {
-    useNextVariants: true,
-  },
+
 })
 
 //Inicio del componente clase App

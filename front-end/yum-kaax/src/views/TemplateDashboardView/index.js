@@ -23,6 +23,7 @@ import Grid from '@material-ui/core/Grid';
 import { Route, BrowserRouter as Router} from 'react-router-dom';
 import SelectDosificadorComponent from '../../Components/SelectDosificadorComponent';
 import AddDosificadorDialogComponent from '../../Components/AddDosificadorDialogComponent';
+import CropGrowthComponent from '../CropGrowthComponent';
 
 const drawerWidth = 240;
 
@@ -76,11 +77,13 @@ title: {
 },
 drawerPaper: {
 	position: 'relative',
+	height:'100vh',
 	whiteSpace: 'nowrap',
 	width: drawerWidth,
 	transition: theme.transitions.create('width', {
 		easing: theme.transitions.easing.sharp,
 		duration: theme.transitions.duration.enteringScreen,
+
 	}),
 },
 drawerPaperClose: {
@@ -95,10 +98,11 @@ drawerPaperClose: {
 	},
 },
 appBarSpacer: theme.mixins.toolbar,
+
 content: {
 	flexGrow: 1,
 	padding: theme.spacing.unit * 3,
-	height: '100vh',
+	width: '100%',
 	overflow: 'auto',
 },
 chartContainer: {
@@ -121,23 +125,15 @@ root2: {
 	},
 },
 containerDashboard:{
-	    display:'flex',
-    JustifyContent:'space-evenly',
-    padding: '0 8px',
-    alignItems: 'center',
-    flexDirection: 'column',
-    marginBottom: '16px',
-    fontWeight: 'none',
+width:'100%',
 },
-  containerCardHeader:{
-    display:'flex',
-    JustifyContent:'space-evenly',
-    padding: '0 8px',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginBottom: '16px',
-    fontWeight: 'none',
-  },
+containerCardHeader:{
+	display:'flex',
+	JustifyContent:'space-evenly',
+	padding: '0 8px',
+	alignItems: 'center',
+
+},
 });
 
 class TemplateDashboardView extends Component {
@@ -155,11 +151,8 @@ class TemplateDashboardView extends Component {
 
 	render() {
 		const { classes } = this.props;
-
 		return (
-
 			<Router>
-
 			<div className={classes.root}>
 			<CssBaseline />
 
@@ -200,16 +193,18 @@ class TemplateDashboardView extends Component {
 
 {/*----------------------------Inicio contenedor main central--------------------------------------*/}
 
-	<div className={classes.containerDashboard}>
+<div className={classes.containerDashboard}>
 
 <main className={classes.content}>
 <div className={classes.appBarSpacer} />
-       <div className={classes.containerCardHeader}>
-      <SelectDosificadorComponent/>
-      <AddDosificadorDialogComponent/>
-      </div>
+<div className={classes.containerCardHeader}>
+<SelectDosificadorComponent/>
+<AddDosificadorDialogComponent/>
+</div>
+
 <Route path="/main" exact component={Dashboard}/>
 <Route path="/main/AddCrops" exact component={AddCrops}/>
+<Route path="/main/AddCrops/CropGrowth" exact component={CropGrowthComponent}/>
 <Route path="/main/MonthlyReport"  exact component={MonthlyReport}/>
 <Route path="/main/Simulation"  exact component={Simulation}/>
 

@@ -61,11 +61,15 @@ class Dashboard extends Component {
       <CardComponent/>
       </div>
 
+
       <NavLink to="/main/AddCrops" activeClassName="selected" style={{ textDecoration: 'none' }}>
+
       <div className={classes.addButton}>
       <AddCropButtonComponent/>
       </div>
-      </NavLink>
+</NavLink>
+
+
       </div>
       );
   }

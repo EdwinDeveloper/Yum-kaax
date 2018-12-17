@@ -3,7 +3,7 @@
 const server = require('./src/server');
 
 /*Declaramos el puerto de conexion del metodo http*/
-const port = 8080;
+const port = 8081;
 
 /*Importamos la coneccion a la base de datos de mongo*/
 const db = require('./src/lib/db');
