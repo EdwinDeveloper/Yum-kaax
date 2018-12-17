@@ -24,6 +24,9 @@ const styles = theme => ({
 });
 
 class SelectDosificadorComponent extends Component {
+    constructor(props){
+      super(props);
+    }
   state = {
     age: '',
     name: 'hai',
@@ -36,7 +39,10 @@ class SelectDosificadorComponent extends Component {
 
   render(){
     const { classes } = this.props;
-
+    const { machineSerial } = this.props
+    const machines = machineSerial.map((serial)=>{
+      return <MenuItem value={10}>Dosificador : {serial}</MenuItem>
+    });
     return(
 
       <form className={classes.root} autoComplete="off">
@@ -52,10 +58,7 @@ class SelectDosificadorComponent extends Component {
       name="age"
       className={classes.selectEmpty}
       >
-      <MenuItem value="">Dosificador No.1</MenuItem>
-      <MenuItem value={10}>Dosificador No.2</MenuItem>
-      <MenuItem value={20}>Dosificador No.3</MenuItem>
-      <MenuItem value={30}>Dosificador No.4</MenuItem>
+        {machines}
       </Select>
       </FormControl>
       </form>

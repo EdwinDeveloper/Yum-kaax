@@ -87,12 +87,12 @@ const loginUser = async (email , password)=>{
     const userExist = await usersModel.findOne({email}).exec();
     if(!userExist) throw new Error('User does not exist');
     const isValidPassword = await validatePassword(userExist.email , password);
-    //console.log(isValidPassword);
     if(!isValidPassword) throw new Error('Invalid Password');
 
     const token = await jwt.create({id:userExist._id});
     const userData = {
         id_User:userExist._id,
+        userName:userExist.userName,
         token
     }
     return userData;

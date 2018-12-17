@@ -141,6 +141,15 @@ containerDashboard:{
 });
 
 class TemplateDashboardView extends Component {
+	constructor(props){
+		super(props);
+		this.state={
+			userName:'',
+			serialsMachines:[],
+			cropsUser:[]
+		}
+	}
+
 	state = {
 		open: true,
 	};
@@ -152,6 +161,32 @@ class TemplateDashboardView extends Component {
 	handleDrawerClose = () => {
 		this.setState({ open: false });
 	};
+
+	componentDidMount(){
+		const userId=localStorage.getItem('id_User');
+		const token =localStorage.getItem('token');
+		const userName=localStorage.getItem('userName');
+		this.setState({
+			userName:userName
+		});
+		fetch('http://localhost:8080/users/userInfo',{
+			method:'POST',
+      		mode:'cors',
+      		headers:{
+				'Content-Type': 'application/json',
+				'Authorization':token
+      		},
+      		body: JSON.stringify({"_id":userId})
+		}).then((json)=>json.json())
+		.then(data=>{
+			
+			this.setState({
+				serialsMachines:data.payload.machinesSerial,
+				cropsUser:data.payload.cropsUser
+			});
+			console.log("En el state: ",this.state.cropsUser);
+		})
+	}
 
 	render() {
 		const { classes } = this.props;
@@ -189,7 +224,7 @@ class TemplateDashboardView extends Component {
 	</IconButton>
 	<LetterAvatars/>
 	<Typography variant="subheading" gutterBottom align="center">
-	Kevin Arroyo
+	{this.state.userName}
 	</Typography>
 	</div>
 	<Divider />
@@ -205,10 +240,13 @@ class TemplateDashboardView extends Component {
 <main className={classes.content}>
 <div className={classes.appBarSpacer} />
        <div className={classes.containerCardHeader}>
-      <SelectDosificadorComponent/>
+      <SelectDosificadorComponent machineSerial={this.state.serialsMachines}/>
       <AddDosificadorDialogComponent/>
       </div>
-<Route path="/main" exact component={Dashboard}/>
+<Route 
+	path="/main" 
+	exact component={Dashboard}
+	/>
 <Route path="/main/AddCrops" exact component={AddCrops}/>
 <Route path="/main/MonthlyReport"  exact component={MonthlyReport}/>
 <Route path="/main/Simulation"  exact component={Simulation}/>
