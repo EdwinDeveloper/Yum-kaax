@@ -30,6 +30,14 @@ const findCrops = async(IdUser)=>{
     //console.log("primer nivel",cropsFinded);
     return cropsFinded;
 }
+
+// const findCropsByIdOfUser = async(idUser)=>{
+//     console.log("menos nivel",idUser);
+//     const cropsFinded = await cropsModel.find({"id_user":idUser._id}).exec();
+//     console.log("primer nivel",cropsFinded);
+//     return cropsFinded;
+// }
+
 const verifyCropsStatus = async(userId)=>{
      const cropsUser = await findCrops(userId);
      //console.log("segundo nivel",cropsUser);
@@ -105,4 +113,5 @@ module.exports = {
     findCrops,
     verifyCropsStatus,
     checkActivateCropStatus
+    //findCropsByIdOfUser
 }

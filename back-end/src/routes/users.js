@@ -3,19 +3,48 @@ const express = require('express');
 const routerUsers = express.Router();
 
 const useCaseUsers = require('../useCases/users');
+const useCaseMachine = require('../useCases/machines');
+const useCaseCrops = require('../useCases/crops');
 
 const auth = require('../middlewares/auth');
 routerUsers.use(auth);
 
-routerUsers.get('/', async(req,res)=>{
-    const getAllUsers =  await useCaseUsers.getAllUsers();
+routerUsers.post('/userInfo',async(req,res)=>{
+    const userId = req.body;
+    const cropsUser = await useCaseCrops.findCrops({'id_user':userId});
+    const machines = await useCaseUsers.getSingleUser(userId);
+    const machinesSerial = machines[0].serial_numbers;
     res.json({
+        success:true,
+        message:'Dashboard Information',
+        payload:{
+            machinesSerial,
+            cropsUser
+        }
+    });
+    //const cropsUser = await useCaseCrops.findCrops();
+});
+
+routerUsers.get('/', async(req,res)=>{
+    try {
+        const getAllUsers =  await useCaseUsers.getAllUsers();
+        res.json({
         success:true,
         message:"These are all the users saved",
         payload:{
             getAllUsers
         }
     });
+    } catch (error) {
+        res.status(404);
+        res.json({
+            success:false,
+            message:"There is a problem",
+            error:[
+                error
+            ]
+        });
+    }
 });
 
 routerUsers.post('/',async (req,res)=>{

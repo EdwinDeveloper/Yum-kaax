@@ -8,7 +8,11 @@ module.exports = async (req,res,next)=>{
     if('authorization' in req.headers){
         try {
             let validJwt = await jwt.verify(req.headers.authorization);
-            if(validJwt) return next();
+            console.warn('token decoded: ', validJwt)
+            if(validJwt) {
+                req.state = { user: { id: validJwt.id } }
+                return next()
+            };
             throw new Error("Invalid token");
         } catch (error) {
             res.status(401);

@@ -10,6 +10,8 @@ import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import HomeIcon from '@material-ui/icons/Home';
 import { BrowserRouter as Router, NavLink } from "react-router-dom";
 import LogoutDialogComponent from '../../Components/LogoutDialogComponent';
+
+
 const styles = theme => ({
   ListItemText:{
     textDecoration:'none',

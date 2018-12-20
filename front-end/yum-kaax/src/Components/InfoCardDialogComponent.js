@@ -6,6 +6,29 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
+import logo3 from '../Assets/Img/Background/exampleCrop.png';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+
+
+const styles = theme => ({
+
+  img: {
+    height: 200,
+    maxWidth: 200,
+    overflow: 'hidden',
+    display: 'block',
+    width: '100%',
+  },
+
+  subTitle: {
+    fontSize: '.9rem',
+    color: '#979797',
+    textAlign:'center',
+  },
+
+});
+
 
 class InfoCardDialogComponent extends Component {
   state = {
@@ -22,72 +45,47 @@ class InfoCardDialogComponent extends Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
       <div>
 
 
-              <Button onClick={this.handleClickOpen('paper')} size="small" color="secondary">
+      <Button onClick={this.handleClickOpen('paper')} size="small" color="secondary">
       <OpenInBrowserIcon />  Historial
       </Button>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          scroll={this.state.scroll}
-          aria-labelledby="scroll-dialog-title"
-        >
-          <DialogTitle id="scroll-dialog-title">Historial</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-              facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum
-              at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-              sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum
-              nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur
-              et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras
-              mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-              egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla
-              sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-              Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis
-              consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-              egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla
-              sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-              Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis
-              consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-              egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla
-              sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-              Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis
-              consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-              egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla
-              sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-              Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis
-              consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-              egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla
-              sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-              Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="secondary">
-              Cancelar
-            </Button>
-            <Button onClick={this.handleClose} color="secondary">
-              Aceptar
-            </Button>
-          </DialogActions>
-        </Dialog>
+      <Dialog
+      open={this.state.open}
+      onClose={this.handleClose}
+      scroll={this.state.scroll}
+      aria-labelledby="scroll-dialog-title"
+      >
+      <DialogTitle id="scroll-dialog-title">Historial</DialogTitle>
+
+      <Typography component="h5" variant="h5" color="inherit"  className={classes.subTitle} >
+      Planta de Moringa
+      </Typography>
+      <div>
+      <img alt="Remy Sharp" src={logo3} className={classes.img}/>
       </div>
-    );
+
+      <DialogContent>
+      <DialogContentText>
+      La moringa, considerada un antibiótico natural, es una planta con múltiples usos y beneficios medicinales. Sus propiedades antiinflamatorias, antimicrobianas, antioxidantes, anticancerígenas, cardiovasculares, y hepatoprotectoras, la hacen útil en el tratamiento de diversas enfermedades.
+      </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+      <Button onClick={this.handleClose} color="secondary">
+      Cancelar
+      </Button>
+      <Button onClick={this.handleClose} color="secondary">
+      Aceptar
+      </Button>
+      </DialogActions>
+      </Dialog>
+      </div>
+      );
   }
 }
 
-export default InfoCardDialogComponent;
+export default withStyles(styles, { withTheme: true })(InfoCardDialogComponent);

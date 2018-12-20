@@ -9,9 +9,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-
+import Grid from '@material-ui/core/Grid'
 import InfoCardDialogComponent from '../../Components/InfoCardDialogComponent';
-import DeleteCropCard from '../../Components/DeleteCropCard';
+import DeleteCropCardComponent from '../../Components/DeleteCropCardComponent';
 
 const outerTheme = createMuiTheme({
   palette: {
@@ -27,6 +27,7 @@ const styles = theme => ({
 
 
   card: {
+
     margin: '10px',
 
   },
@@ -87,6 +88,7 @@ class CardComponent extends Component {
   render() {
     const { classes } = this.props;
     return (
+      <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
       <Card className={classes.card }>
       <div className={classes.cardContent}>
       <CardHeader className={classes.cardHeader}
@@ -114,10 +116,11 @@ class CardComponent extends Component {
       <MuiThemeProvider theme={outerTheme}>
       <CardActions className={classes.actions} disableActionSpacing>
       <InfoCardDialogComponent/>
-      <DeleteCropCard/>
+      <DeleteCropCardComponent/>
       </CardActions>
       </MuiThemeProvider>
       </Card>
+      </Grid>
       );
   }
 }
