@@ -30,7 +30,7 @@ const styles = theme => ({
 });
 
 
-class InfoCardDialogComponent extends Component {
+class InfoCardNutrientDialogComponent extends Component {
   state = {
     open: false,
     scroll: 'paper',
@@ -88,4 +88,4 @@ class InfoCardDialogComponent extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(InfoCardDialogComponent);
+export default withStyles(styles, { withTheme: true })(InfoCardNutrientDialogComponent);

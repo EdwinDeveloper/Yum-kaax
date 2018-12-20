@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -8,6 +6,8 @@ import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import WallpaperIcon from '@material-ui/icons/Wallpaper';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import HomeIcon from '@material-ui/icons/Home';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import { BrowserRouter as Router, NavLink } from "react-router-dom";
 import LogoutDialogComponent from '../../Components/LogoutDialogComponent';
 
@@ -18,7 +18,7 @@ const styles = theme => ({
   },
 });
 
-class MainListItems extends Component {
+class MainListItemComponent extends Component {
   render(){
 
     return(
@@ -29,20 +29,20 @@ class MainListItems extends Component {
       <ListItemIcon>
       <HomeIcon />
       </ListItemIcon>
-      <ListItemText primary="Inicio" />
+      <ListItemText primary="inicio" />
       </ListItem>
       </NavLink>
 
-      <NavLink to="/main/Simulation" activeClassName="selected" style={{ textDecoration: 'none' }}>
+      <NavLink to="/main/simulation" activeClassName="selected" style={{ textDecoration: 'none' }}>
       <ListItem button>
       <ListItemIcon>
       <WallpaperIcon />
       </ListItemIcon>
-      <ListItemText primary="Simulacion" />
+      <ListItemText primary="simulacion" />
       </ListItem>
       </NavLink>
 
-      <NavLink to="/main/MonthlyReport" activeClassName="selected" style={{ textDecoration: 'none' }}>
+      <NavLink to="/main/monthly/report" activeClassName="selected" style={{ textDecoration: 'none' }}>
 
       <ListItem button>
       <ListItemIcon>
@@ -52,7 +52,7 @@ class MainListItems extends Component {
       </ListItem>
       </NavLink>
 
-      <NavLink to="/main/AddCrops" activeClassName="selected" style={{ textDecoration: 'none' }}>
+      <NavLink to="/main/add/crops" activeClassName="selected" style={{ textDecoration: 'none' }}>
       <ListItem button>
       <ListItemIcon>
       <NoteAddIcon />
@@ -67,4 +67,4 @@ class MainListItems extends Component {
   }
 }
 
-export default MainListItems;
+export default MainListItemComponent;
