@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import {MuiThemeProvider, createMuiTheme } from '@material-ui/core';
-import Badge from '@material-ui/core/Badge';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import InfoCardDialogComponent from '../Components/InfoCardDialogComponent';
+import Grid from '@material-ui/core/Grid'
+import {MuiThemeProvider, createMuiTheme } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import InfoCardNutrientDialogComponent from '../Components/InfoCardNutrientDialogComponent';
 
 const outerTheme = createMuiTheme({
   palette: {
@@ -21,13 +21,9 @@ const outerTheme = createMuiTheme({
   },
 });
 
-
 const styles = theme => ({
-
-
   card: {
     margin: '10px',
-
   },
   media: {
     height: 0,
@@ -35,7 +31,7 @@ const styles = theme => ({
   },
   actions: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-end',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -72,9 +68,7 @@ const styles = theme => ({
 
   cardContentTxt: {
     padding: '0px 3px 0px 3px !important',
-
   }
-
 });
 
 class CardCropGrowthComponent extends Component {
@@ -86,36 +80,37 @@ class CardCropGrowthComponent extends Component {
   render() {
     const { classes } = this.props;
     return (
+
+
+      <Grid item xs={12} sm={12} md={6} lg={3} xl={3}>
+
       <Card className={classes.card }>
       <div className={classes.cardContent}>
       <CardHeader className={classes.cardHeader}
       avatar={
         <Avatar aria-label="Recipe" className={classes.avatar}>
-        R
+        M
         </Avatar>
       }
-      action={
-        <div className={classes.padding}>
-        <Badge color="primary" badgeContent={''} classes={{ badge: classes.badge }}>
-        <Typography >Completado</Typography>
-        </Badge>
-        </div>
-      }
-      title="Cultivo de cebolla"
-      subheader="September 14, 2016"
+      title="Cantidad de Magnesio registrado"
       />
       <CardContent className={classes.cardContentTxt}>
       <Typography component="p">
-      Cultivo de cebolla colocado el dia 11 de noviembre del 2018, finalizado el dia 15 de diciembre por el usuario.
+      Ideal: 0 g/l por 100 litros de agua
+      </Typography>
+      <Typography component="p">
+      Faltante: 0 g/l por 100 litros de agua
       </Typography>
       </CardContent>
       </div>
       <MuiThemeProvider theme={outerTheme}>
       <CardActions className={classes.actions} disableActionSpacing>
-      <InfoCardDialogComponent/>
+      <InfoCardNutrientDialogComponent/>
       </CardActions>
       </MuiThemeProvider>
       </Card>
+      </Grid>
+
       );
   }
 }

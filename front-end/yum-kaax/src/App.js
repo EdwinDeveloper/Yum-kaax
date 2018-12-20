@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import {MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 import lightGreen from '@material-ui/core/colors/lightGreen';
-import LoginRegisterComponent from './views/login';
-import error404 from './views/error404';
-import TemplateDashboardView from './views/TemplateDashboardView';
-import ProgressMobileStepper from './views/mobile/loginMobile';
+import {MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 import { Route, BrowserRouter, Switch} from 'react-router-dom';
-import MainLoginMobile from './views/mobile/loginMobile/mainLoginMobile';
-
+import MainLoginMobileView from './Views/MobileView/LoginMobileView';
+import LoginRegisterView from './Views/LoginView';
+import Error404View from './Views/Error404View';
+import TemplateDashboardView from './Views/TemplateDashboardView';
 import './App.css';
 
 //Inicio del tema color lightGreen para todo el proyecto
@@ -33,12 +31,11 @@ class App extends Component {
       <BrowserRouter>
       <MuiThemeProvider theme={theme}>
         <Switch>
-        <Route path="/" exact component={LoginRegisterComponent}/>
-        <Route path="/login" exact  component={LoginRegisterComponent}/>
-        <Route path="/main"  component={TemplateDashboardView}/>
-        <Route path="/mobile" exact component={ProgressMobileStepper}/>
-        <Route path="/mainMobile" exact component={MainLoginMobile}/>
-        <Route path="/*" exact component={error404}/>
+        <Route path="/" exact component={LoginRegisterView}/>
+        <Route path="/login" exact  component={LoginRegisterView}/>
+        <Route path="/main"   component={TemplateDashboardView}/>
+        <Route path="/mainMobile" exact component={MainLoginMobileView}/>
+        <Route path="/*" exact component={Error404View}/>
         </Switch>
       </MuiThemeProvider>
       </BrowserRouter>
