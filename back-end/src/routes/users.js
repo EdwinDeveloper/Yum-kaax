@@ -11,6 +11,8 @@ routerUsers.use(auth);
 
 routerUsers.post('/userInfo',async(req,res)=>{
     const token = await jwt.verify(req.headers.authorization);
+    const userInfo = await useCaseUsers.getSingleUser(token.id);
+    const user = userInfo[0].userName;
     const cropsUser = await useCaseCrops.findCrops({'id_user':token.id});
     const machines = await useCaseUsers.getSingleUser(token.id);
     const machinesSerial = machines[0].serial_numbers;
@@ -18,6 +20,7 @@ routerUsers.post('/userInfo',async(req,res)=>{
         success:true,
         message:'Dashboard Information',
         payload:{
+            user,
             machinesSerial,
             cropsUser
         }

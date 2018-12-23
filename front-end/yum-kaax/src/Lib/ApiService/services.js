@@ -192,14 +192,13 @@ export function getUsers(token) {
     });
  }
 
- export function DashBoardInformationUser(token,data){
+ export function DashBoardInformationUser(token){
      return apiFetch('/users/userInfo',{
-        method: 'PUT',
+        method: 'POST',
         headers: {
         'Content-Type':'application/json',
         'authorization':token
-        },
-        body: JSON.stringify(data)
+        }
      });
  }
 

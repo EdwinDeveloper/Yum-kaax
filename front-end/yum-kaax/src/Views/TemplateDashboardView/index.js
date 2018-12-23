@@ -23,7 +23,7 @@ import CropGrowthSection from '../../Sections/CropGrowthSection';
 import SelectDosificadorComponent from '../../Components/SelectDosificadorComponent';
 import AddDosificadorDialogComponent from '../../Components/AddDosificadorDialogComponent';
 import BottomBarMobileComponent from '../MobileView/BottomBarMobileComponent';
-
+import { DashBoardInformationUser } from '../../Lib/ApiService/services';
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -171,9 +171,9 @@ class TemplateDashboardView extends Component {
 		this.setState({ open: false });
 	};
 
-	componentDidMount(){
+	async componentDidMount(){
 		//const userId=localStorage.getItem('id_User');
-		//const token =localStorage.getItem('token');
+		const token =localStorage.getItem('token');
 		//const userName=localStorage.getItem('userName');
 		// this.setState({
 		// 	userName:userName
@@ -195,6 +195,12 @@ class TemplateDashboardView extends Component {
 		// 	});
 		// 	console.log("En el state: ",this.state.cropsUser);
 		// })
+		const userData = await DashBoardInformationUser(token);
+		console.log(userData);
+		this.setState({
+			serialsMachines:userData.payload.machinesSerial,
+			userName:userData.payload.user
+		});
 	}
 
 	render() {
