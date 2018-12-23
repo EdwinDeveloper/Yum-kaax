@@ -139,8 +139,12 @@ const assignMachine = async (dataMachine,_id)=>{
 const unassignMachine = async(machineData)=>{
     const { serial_number , recordStatus , model , _id } = machineData; 
     const existinMachine = await machinesModel.find({serial_number}).exec();
+    
     const idExistingMachine = existinMachine[0]._id;
     const idUserAssigned = existinMachine[0].id_user;
+    if(idUserAssigned=="") throw new Error("THE MACHINE IS NOT ASSIGNED");
+    if(existinMachine[0].useStatus=="true") throw new Error("THE MACHINE IS IN USE");
+    console.log("data",idUserAssigned);
     if(existinMachine.length > 0){
              const machineJson = {
                 recordStatus:"inactive",

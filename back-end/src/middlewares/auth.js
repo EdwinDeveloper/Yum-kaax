@@ -8,6 +8,7 @@ module.exports = async (req,res,next)=>{
     if('authorization' in req.headers){
         try {
             let validJwt = await jwt.verify(req.headers.authorization);
+            //console.log(validJwt);
             if(validJwt) return next();
             throw new Error("Invalid token");
         } catch (error) {

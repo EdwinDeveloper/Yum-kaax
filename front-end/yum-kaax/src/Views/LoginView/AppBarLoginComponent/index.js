@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import {Link} from "react-router-dom";
+import { login } from '../../../Lib/ApiService/services';
 
 const styles = theme => ({
   container: {
@@ -73,31 +74,38 @@ class AppBarLoginComponent extends Component {
     });
   };
 
-  handleSubmit(e){
+  async handleSubmit(e){
     e.preventDefault();
-    fetch('http://localhost:8080/auth/login',{
-      method:'POST',
-      mode:'cors',
-      headers:{
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        'email':this.state.email,'password':this.state.password
-      })
+    // fetch('http://localhost:8080/auth/login',{
+    //   method:'POST',
+    //   mode:'cors',
+    //   headers:{
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     'email':this.state.email,'password':this.state.password
+    //   })
 
-    }).then(res=>res.json())
-    .then(json=> {
-      console.log(json);
-      if(json.message==="Logged successfuly"){
-          const {user_info}=json.payload;
-          localStorage.setItem('id_User',user_info.id_User);
-          localStorage.setItem('token',user_info.token);
-          localStorage.setItem('userName',user_info.userName);
-          this.props.history.push('/main');
-      }else if(json.success===false){
-          alert("Invalid data");
-      }
-    })
+    // }).then(res=>res.json()).then(json=> {
+    //   console.log(json);
+    //   if(json.message==="Logged successfuly"){
+    //       const {user_info}=json.payload;
+    //       localStorage.setItem('id_User',user_info.id_User);
+    //       localStorage.setItem('token',user_info.token);
+    //       localStorage.setItem('userName',user_info.userName);
+    //       this.props.history.push('/main');
+    //   }else if(json.success===false){
+    //       alert("Invalid data");
+    //   }
+    // })
+    const dataLogin =await login({'email':this.state.email,'password':this.state.password});
+    if(dataLogin.message=="Logged successfuly"){
+        const token = dataLogin.payload.user_info.token;
+        localStorage.setItem('token',token);
+        this.props.history.push('/main');
+    }else if(dataLogin.success===false){
+             alert("Invalid data");
+     }
   };
 
   handleChangeInput(event){

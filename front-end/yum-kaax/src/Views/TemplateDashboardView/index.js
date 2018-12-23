@@ -172,29 +172,29 @@ class TemplateDashboardView extends Component {
 	};
 
 	componentDidMount(){
-		const userId=localStorage.getItem('id_User');
-		const token =localStorage.getItem('token');
-		const userName=localStorage.getItem('userName');
-		this.setState({
-			userName:userName
-		});
-		fetch('http://localhost:8080/users/userInfo',{
-			method:'POST',
-			mode:'cors',
-			headers:{
-				'Content-Type': 'application/json',
-				'Authorization':token
-			},
-			body: JSON.stringify({"_id":userId})
-		}).then((json)=>json.json())
-		.then(data=>{
+		//const userId=localStorage.getItem('id_User');
+		//const token =localStorage.getItem('token');
+		//const userName=localStorage.getItem('userName');
+		// this.setState({
+		// 	userName:userName
+		// });
+		// fetch('http://localhost:8080/users/userInfo',{
+		// 	method:'POST',
+		// 	mode:'cors',
+		// 	headers:{
+		// 		'Content-Type': 'application/json',
+		// 		'Authorization':token
+		// 	},
+		// 	body: JSON.stringify({"_id":userId})
+		// }).then((json)=>json.json())
+		// .then(data=>{
 
-			this.setState({
-				serialsMachines:data.payload.machinesSerial,
-				cropsUser:data.payload.cropsUser
-			});
-			console.log("En el state: ",this.state.cropsUser);
-		})
+		// 	this.setState({
+		// 		serialsMachines:data.payload.machinesSerial,
+		// 		cropsUser:data.payload.cropsUser
+		// 	});
+		// 	console.log("En el state: ",this.state.cropsUser);
+		// })
 	}
 
 	render() {

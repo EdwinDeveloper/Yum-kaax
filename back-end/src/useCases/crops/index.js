@@ -9,11 +9,12 @@ const getAllCrops = async ()=>{
 }
 
 const getPerUserCrops = async (cropId)=>{
-    const findUser = await userModel.find({"userName":cropId.userName}).exec();
+    const findUser = await userModel.find({"_id":cropId}).exec();
+    //console.log(findUser);
     if(findUser.length==0) return "USER DOES NOT EXIST";
-    console.log(cropId);
-    console.log(cropId._id);
-    const userCrops = await cropsModel.find({"id_user":cropId._id}).exec();
+    //console.log(cropId);
+    //console.log(cropId._id);
+    const userCrops = await cropsModel.find({"id_user":cropId}).exec();
     if(userCrops.length == 0) return "NO CROPS TO THIS USER";
     return userCrops;
 }
@@ -93,8 +94,10 @@ const CreateAssignCrop= async (dataCrop) =>{
 }
 
 const updateCrop =async(cropData)=>{
+    const verifyExist = await cropsModel.findById(cropData._id).exec();
+    if(verifyExist==null) throw new Error("Crop does not exist");
     const modifidModel = await cropsModel.findByIdAndUpdate(cropData._id,cropData).exec();
-    console.warn(modifidModel); 
+    //console.warn(modifidModel); 
     return modifidModel;
 }
 

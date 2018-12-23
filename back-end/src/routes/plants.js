@@ -3,14 +3,14 @@ const express = require('express');
 const routerPlants = express.Router();
 
 const useCasePlants = require('../useCases/plants');
-
+const jwt = require('../lib/jwt');
 const auth = require('../middlewares/auth');
 routerPlants.use(auth);
 
 routerPlants.get('/', async(req,res)=>{
     try {
+        
         const allPlants = await useCasePlants.getAllPlants();
-        console.log(typeof(allPlants));
         res.json({
             success:true,
             message:"Al the records in the database",

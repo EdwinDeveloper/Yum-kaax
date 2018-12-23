@@ -5,14 +5,14 @@ const routerUsers = express.Router();
 const useCaseUsers = require('../useCases/users');
 const useCaseMachine = require('../useCases/machines');
 const useCaseCrops = require('../useCases/crops');
-
+const jwt = require('../lib/jwt');
 const auth = require('../middlewares/auth');
 routerUsers.use(auth);
 
 routerUsers.post('/userInfo',async(req,res)=>{
-    const userId = req.body;
-    const cropsUser = await useCaseCrops.findCrops({'id_user':userId});
-    const machines = await useCaseUsers.getSingleUser(userId);
+    const token = await jwt.verify(req.headers.authorization);
+    const cropsUser = await useCaseCrops.findCrops({'id_user':token.id});
+    const machines = await useCaseUsers.getSingleUser(token.id);
     const machinesSerial = machines[0].serial_numbers;
     res.json({
         success:true,

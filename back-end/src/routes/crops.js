@@ -1,7 +1,7 @@
 const express = require('express');
 const routerCrops = express.Router();
 const useCaseCrops = require('../useCases/crops');
-
+const jwt = require('../lib/jwt');
 const auth = require('../middlewares/auth');
 routerCrops.use(auth);
 
@@ -29,8 +29,10 @@ routerCrops.get('/',async(req,res)=>{
 
 routerCrops.post('/find',async(req,res)=>{
     try {
-        const idUser = req.body;
-        const cropsUserFind = await useCaseCrops.getPerUserCrops(idUser);
+        const userInfo = req.body;
+        const token = req.headers.authorization;
+        const idUser = await jwt.verify(token);
+        const cropsUserFind = await useCaseCrops.getPerUserCrops(idUser.id);
         res.json({
             success:true,
             message:"Crops of the user",
@@ -52,8 +54,20 @@ routerCrops.post('/find',async(req,res)=>{
 
 routerCrops.post('/',async(req,res)=>{
     try {
-        const cropData = req.body;
-        const newCrop = await useCaseCrops.newCrop(cropData);
+        const token = await jwt.verify(req.headers.authorization);
+        const { plantAmount , cropTime , wheader , date , cropStatus , id_user , id_plant , id_machine} = req.body;
+        const cropObject ={
+            plantAmount,
+            cropTime,
+            wheader,
+            date,
+            cropStatus,
+            id_user:token.id,
+            id_plant,
+            id_machine
+        }
+        console.log(cropObject);
+        const newCrop = await useCaseCrops.newCrop(cropObject);
         res.json({
             success:true,
             message:"Crop created",
@@ -75,8 +89,14 @@ routerCrops.post('/',async(req,res)=>{
 
 routerCrops.post('/create',async(req,res)=>{
     try {
-        const cropData = req.body;
-        const newCrop = await useCaseCrops.CreateAssignCrop(cropData);
+        const { plantAmount , cropTime , wheader , date , cropStatus , id_plant , id_machine } = req.body;
+        const token_decode= await jwt.verify(req.headers.authorization);
+        const id_user=token_decode.id;
+        const cropObject={
+            plantAmount,cropTime,wheader,date,cropStatus,id_user,id_plant,id_machine
+        }
+        //console.log(cropObject);
+        const newCrop = await useCaseCrops.CreateAssignCrop(cropObject);
         res.json({
             success:true,
             message:"Crop Created",
@@ -98,8 +118,13 @@ routerCrops.post('/create',async(req,res)=>{
 
 routerCrops.put('/',async(req,res)=>{
     try {
-        const putCrop = req.body;
-        const cropPut = await useCaseCrops.updateCrop(putCrop);
+        const {_id , plantAmount ,cropTime ,wheader,date,cropStatus,id_plant,id_machine} = req.body;
+        const token = await jwt.verify(req.headers.authorization);
+        const cropObject={
+            _id , plantAmount ,cropTime ,wheader,date,cropStatus,id_user:token.id,id_plant,id_machine
+        }
+        console.log(cropObject);
+        const cropPut = await useCaseCrops.updateCrop(cropObject);
         //console.log(cropPut);
         res.json({
         success:true,
@@ -114,7 +139,7 @@ routerCrops.put('/',async(req,res)=>{
             success:true,
             message:"User can not be updated",
             error:[
-                error
+                error.message
             ]
         });
     }
