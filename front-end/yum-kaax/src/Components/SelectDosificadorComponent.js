@@ -36,13 +36,14 @@ class SelectDosificadorComponent extends Component {
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+    console.log(event.target.value);
   };
 
   render(){
     const { classes } = this.props;
-    const { machineSerial } = this.props
+    const { machineSerial,selectMachine } = this.props
     const machines = machineSerial.map((serial)=>{
-      return <MenuItem value={10}>Dosificador : {serial}</MenuItem>
+      return <MenuItem value={serial}>Dosificador: {serial}</MenuItem>
     });
     return(
 
@@ -53,13 +54,13 @@ class SelectDosificadorComponent extends Component {
       </InputLabel>
       <Select
       value={this.state.age}
-      onChange={this.handleChange}
+      onChange={selectMachine}
       input={<Input name="age" id="age-label-placeholder" />}
       displayEmpty
       name="age"
       className={classes.selectEmpty}
       >
-      {machines}
+            {machines}
       </Select>
       </FormControl>
       </form>

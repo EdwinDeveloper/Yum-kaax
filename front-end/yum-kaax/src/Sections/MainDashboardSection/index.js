@@ -45,7 +45,6 @@ class MainDashboardSection extends Component {
 
   render() {
     const { classes , crops } = this.props;
-    console.log("data-crops",crops);
     return (
       <div>
       <div className={classes.containerMain}>
@@ -53,6 +52,7 @@ class MainDashboardSection extends Component {
       <PieChartStoryComponent/>
       </div>
       <div className={classes.containerCards}>
+      <CardComponent/>
       <CardComponent/>
       </div>
       <NavLink to="/main/add/crops" activeClassName="selected" style={{ textDecoration: 'none' }}>

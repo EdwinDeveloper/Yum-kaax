@@ -155,8 +155,10 @@ class TemplateDashboardView extends Component {
 		this.state={
 			userName:'',
 			serialsMachines:[],
-			cropsUser:[]
+			cropsUser:[],
+			machineSelected:''
 		}
+		this.handleMahineSelected=this.handleMahineSelected.bind(this);
 	}
 
 	state = {
@@ -170,31 +172,17 @@ class TemplateDashboardView extends Component {
 	handleDrawerClose = () => {
 		this.setState({ open: false });
 	};
-
+	handleMahineSelected = event =>{
+		 	this.setState({
+			machineSelected:event.target.value,
+			[event.target.name]: event.target.value
+		});
+		console.log("data info",event.target.value);
+		console.log(this.state.machineSelected);
+		
+	}
 	async componentDidMount(){
-		//const userId=localStorage.getItem('id_User');
 		const token =localStorage.getItem('token');
-		//const userName=localStorage.getItem('userName');
-		// this.setState({
-		// 	userName:userName
-		// });
-		// fetch('http://localhost:8080/users/userInfo',{
-		// 	method:'POST',
-		// 	mode:'cors',
-		// 	headers:{
-		// 		'Content-Type': 'application/json',
-		// 		'Authorization':token
-		// 	},
-		// 	body: JSON.stringify({"_id":userId})
-		// }).then((json)=>json.json())
-		// .then(data=>{
-
-		// 	this.setState({
-		// 		serialsMachines:data.payload.machinesSerial,
-		// 		cropsUser:data.payload.cropsUser
-		// 	});
-		// 	console.log("En el state: ",this.state.cropsUser);
-		// })
 		const userData = await DashBoardInformationUser(token);
 		console.log(userData);
 		this.setState({
@@ -202,7 +190,6 @@ class TemplateDashboardView extends Component {
 			userName:userData.payload.user
 		});
 	}
-
 	render() {
 		const { classes } = this.props;
 		return (
@@ -275,7 +262,7 @@ class TemplateDashboardView extends Component {
 <main className={classes.content}>
 <div className={classes.appBarSpacer} />
 <div className={classes.containerCardHeader}>
-<SelectDosificadorComponent machineSerial={this.state.serialsMachines}/>
+<SelectDosificadorComponent selectMachine={this.handleMahineSelected} machineSerial={this.state.serialsMachines}/>
 <AddDosificadorDialogComponent/>
 </div>
 <Route path="/main" exact component={MainDashboardSection}/>
